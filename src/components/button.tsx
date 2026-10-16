@@ -1,16 +1,8 @@
-import {
-    Pressable,
-    StyleProp,
-    StyleSheet,
-    Text,
-    View,
-    ViewStyle,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type ButtonProp = {
   text: string;
   onClick: any;
-  style: StyleProp<ViewStyle>;
 };
 
 export function Button(props: ButtonProp) {
