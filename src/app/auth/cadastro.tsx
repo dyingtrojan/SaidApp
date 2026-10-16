@@ -1,8 +1,15 @@
+import { signUpNewUser } from "@/app/auth/authContext";
 import { Button } from "@/components/button";
 import { Link } from "expo-router";
+import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function CadastroPage() {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [nome, setNome] = useState("");
+  const [userName, setUserName] = useState("");
+
   return (
     <View style={styles.container}>
       <View style={styles.login}>
@@ -23,26 +30,32 @@ export default function CadastroPage() {
         <Text>{"\n"}</Text>
         <Text>Nome de usuário</Text>
         <TextInput
+          value={userName}
+          onChangeText={setUserName}
           style={styles.input}
           placeholder="@nome_de_usuario"
         ></TextInput>
         <Text>{"\n"}</Text>
         <Text>E-mail</Text>
         <TextInput
+          value={email}
+          onChangeText={setEmail}
           style={styles.input}
           placeholder="exemplo@dominio.com"
         ></TextInput>
         <Text>{"\n"}</Text>
         <Text>Senha</Text>
         <TextInput
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry={true}
           style={styles.input}
           placeholder="Insira sua senha aqui"
         ></TextInput>
         <Text>{"\n"}</Text>
         <Button
           text="Concluir"
-          style={styles.button}
-          onClick={() => alert("Login Concluido")}
+          onClick={() => signUpNewUser(nome, email, senha)}
         />
       </View>
     </View>

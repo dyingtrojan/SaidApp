@@ -10,11 +10,11 @@ export default function Index() {
         memorias que ficarão marcadas.
       </Text>
       <View style={styles.buttons}>
-        <Link style={styles.button} href="/auth/cadastro">
+        <Link style={styles.button} href="./auth/cadastro">
           Criar Conta
         </Link>
         <Text>{"\n"}</Text>
-        <Link style={styles.button} href={"/auth/login"}>
+        <Link style={styles.button} href={"./auth/login"}>
           Fazer Login
         </Link>
       </View>

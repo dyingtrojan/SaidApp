@@ -1,8 +1,13 @@
 import { Button } from "@/components/button";
 import { Link } from "expo-router";
+import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
+import { signInWithEmail } from "./authContext";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <View style={styles.container}>
       <View style={styles.login}>
@@ -20,20 +25,24 @@ export default function LoginPage() {
         <Text>{"\n"}</Text>
         <Text>E-mail</Text>
         <TextInput
+          value={email}
+          onChangeText={setEmail}
           style={styles.input}
           placeholder="exemplo@dominio.com"
         ></TextInput>
         <Text>{"\n"}</Text>
         <Text>Senha</Text>
         <TextInput
+          value={password}
+          secureTextEntry={true}
+          onChangeText={setPassword}
           style={styles.input}
           placeholder="Insira sua senha aqui"
         ></TextInput>
         <Text>{"\n"}</Text>
         <Button
           text="Concluir"
-          style={styles.button}
-          onClick={() => alert("Login Concluido")}
+          onClick={() => signInWithEmail(email, password)}
         />
       </View>
     </View>
