@@ -1,6 +1,6 @@
 import { signUpNewUser } from "@/app/auth/authContext";
 import { Button } from "@/components/button";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -26,7 +26,12 @@ export default function CadastroPage() {
         </Text>
         <Text>{"\n"}</Text>
         <Text>Nome</Text>
-        <TextInput style={styles.input} placeholder="Nome"></TextInput>
+        <TextInput
+          style={styles.input}
+          placeholder="Nome"
+          value={nome}
+          onChangeText={setNome}
+        ></TextInput>
         <Text>{"\n"}</Text>
         <Text>Nome de usuário</Text>
         <TextInput
@@ -55,7 +60,7 @@ export default function CadastroPage() {
         <Text>{"\n"}</Text>
         <Button
           text="Concluir"
-          onClick={() => signUpNewUser(nome, email, senha)}
+          onClick={() => signUp(nome, email, senha, userName)}
         />
       </View>
     </View>
@@ -107,3 +112,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export async function signUp(
+  nome: string,
+  email: string,
+  password: string,
+  userName: string,
+) {
+  await signUpNewUser(nome, email, password, userName);
+  router.replace("/telaInicial");
+}
