@@ -1,7 +1,12 @@
 import { SaidaCard } from "@/components/saidaCard";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { checkIfLogged } from "./auth/authContext";
 
 export default function TelaInicial() {
+  useEffect(() => {
+    checkIfLogged();
+  }, []);
   return (
     <View>
       <View style={styles.center}>
