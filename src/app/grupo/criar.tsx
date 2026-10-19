@@ -1,5 +1,6 @@
 import { Button } from "@/components/button";
 import { criarGrupo } from "@/lib/databaseHandler";
+import { Link, router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -10,6 +11,16 @@ export default function CriarGrupoPage() {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
+        <View style={styles.header}>
+          <Link
+            style={{ fontWeight: "500", fontSize: 20 }}
+            href={"/(tabs)/grupos"}
+          >
+            ← Voltar
+          </Link>
+          <Text>{"\n"}</Text>
+        </View>
+        <Text style={styles.title}>Criação de grupo</Text>
         <Text>Nome do grupo</Text>
         <TextInput
           value={nome}
@@ -24,16 +35,21 @@ export default function CriarGrupoPage() {
           style={styles.multilineInput}
           multiline
           numberOfLines={4}
-          maxLength={50}
+          maxLength={200}
         ></TextInput>
         <Text>{"\n"}</Text>
         <Button
           text="Criar Grupo"
-          onClick={() => criarGrupo(nome, descricao)}
+          onClick={() => criarGrupoWithRedirect(nome, descricao)}
         />
       </View>
     </View>
   );
+}
+
+async function criarGrupoWithRedirect(nome: string, descricao: string) {
+  await criarGrupo(nome, descricao);
+  router.replace("/(tabs)/grupos");
 }
 
 const styles = StyleSheet.create({
@@ -81,6 +97,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
+    width: 200,
+    height: 80,
   },
   title: {
     fontSize: 45,

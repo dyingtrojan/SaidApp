@@ -1,14 +1,16 @@
 import { signUpNewUser } from "@/app/auth/authContext";
 import { Button } from "@/components/button";
+import { styles } from "@/components/styles";
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 
 export default function CadastroPage() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [nome, setNome] = useState("");
   const [userName, setUserName] = useState("");
+  const [dataNasc, setDataNasc] = useState(new Date());
 
   return (
     <View style={styles.container}>
@@ -66,53 +68,6 @@ export default function CadastroPage() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  login: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "#666565",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 20,
-  },
-  header: {
-    alignSelf: "flex-start",
-  },
-  button: {
-    backgroundColor: "#000000",
-    color: "#ffffff",
-    borderColor: "#ffffff00",
-    textDecorationLine: "none",
-    textDecorationColor: "#ffffff",
-    borderRadius: 15,
-    width: 200,
-    height: 60,
-    marginBottom: 20,
-    textAlign: "center",
-    textAlignVertical: "center",
-    alignContent: "space-evenly",
-  },
-  input: {
-    borderColor: "#000000",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    width: 200,
-    height: 40,
-  },
-  title: {
-    fontSize: 45,
-    fontWeight: "bold",
-  },
-});
-
 export async function signUp(
   nome: string,
   email: string,
@@ -120,5 +75,5 @@ export async function signUp(
   userName: string,
 ) {
   await signUpNewUser(nome, email, password, userName);
-  router.replace("/telaInicial");
+  router.replace("/(tabs)");
 }

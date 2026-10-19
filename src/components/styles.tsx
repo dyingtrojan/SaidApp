@@ -1,0 +1,111 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+  },
+  genericContainer: {
+    flex: 1,
+  },
+  multilineInput: {
+    borderColor: "#000000",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    width: 200,
+    height: 80,
+  },
+  containerScroll: {
+    padding: 30,
+    marginTop: 20,
+    flex: 1,
+  },
+  sidewaysContainer: {
+    flex: 1,
+    padding: 10,
+    overflow: "scroll",
+    flexDirection: "row",
+  },
+  fixedHeader: {
+    marginTop: 20,
+    flexDirection: "row",
+    position: "sticky",
+    top: 0,
+  },
+  trueHeader: {
+    padding: 20,
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    backgroundColor: "#dbd9d9",
+    width: "100%",
+  },
+  login: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "#666565",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 20,
+  },
+  right: {
+    alignContent: "flex-start",
+  },
+  header: {
+    alignSelf: "flex-start",
+  },
+  buttonProfileEdit: {
+    flexDirection: "row",
+    alignContent: "flex-end",
+  },
+  input: {
+    borderColor: "#000000",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    width: 200,
+    height: 40,
+  },
+  title: {
+    fontSize: 45,
+    fontWeight: "bold",
+  },
+  subtitle: {
+    fontSize: 32,
+    fontWeight: "semibold",
+  },
+  grupoCard: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "#666565",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 20,
+  },
+  buttons: {
+    marginTop: 40,
+  },
+  button: {
+    backgroundColor: "#000000",
+    color: "#ffffff",
+    borderColor: "#ffffff00",
+    textDecorationLine: "none",
+    textDecorationColor: "#ffffff",
+    borderRadius: 15,
+    width: 200,
+    height: 60,
+    marginBottom: 20,
+    textAlign: "center",
+    textAlignVertical: "center",
+    alignContent: "space-evenly",
+  },
+  a: {
+    textDecorationLine: "none",
+    textDecorationColor: "white",
+    color: "white",
+    textAlign: "center",
+    alignItems: "center",
+  },
+});
