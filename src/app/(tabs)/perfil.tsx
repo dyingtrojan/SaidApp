@@ -25,7 +25,6 @@ export default function Perfil() {
           const { data: urlData } = supabase.storage
             .from("avatars")
             .getPublicUrl(usuario.fotoperfil);
-          console.log(urlData);
           setImage(urlData.publicUrl);
         }
       }
