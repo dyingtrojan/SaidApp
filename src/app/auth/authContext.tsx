@@ -1,5 +1,4 @@
 import { RegisterUser } from "@/lib/databaseHandler";
-import { router } from "expo-router";
 import { createContext } from "react";
 import { supabase } from "../../lib/supabaseClient";
 
@@ -24,7 +23,7 @@ export async function signUpNewUser(
   return { success: true, data };
 }
 export async function signInWithEmail(email: string, password: string) {
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
   });
@@ -38,7 +37,6 @@ export async function signInWithEmail(email: string, password: string) {
 export async function checkIfLogged() {
   const { data } = await supabase.auth.getSession();
   if (data.session == null) {
-    router.replace("/");
     return false;
   } else {
     return true;
@@ -52,4 +50,13 @@ export async function getUserID(): Promise<string> {
     throw new Error("Usuario não está autenticado.");
   }
   return user_id;
+}
+
+export async function logOut() {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.log("Um erro ocorreu: " + error);
+    return { success: false, error };
+  }
+  return { success: true };
 }

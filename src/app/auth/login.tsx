@@ -1,7 +1,8 @@
 import { Button } from "@/components/button";
-import { Link } from "expo-router";
+import { styles } from "@/components/styles";
+import { Link, router } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 import { signInWithEmail } from "./authContext";
 
 export default function LoginPage() {
@@ -40,57 +41,18 @@ export default function LoginPage() {
           placeholder="Insira sua senha aqui"
         ></TextInput>
         <Text>{"\n"}</Text>
-        <Button
-          text="Concluir"
-          onClick={() => signInWithEmail(email, password)}
-        />
+        <Button text="Concluir" onClick={() => signIn(email, password)} />
       </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  login: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "#666565",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 20,
-  },
-  header: {
-    alignSelf: "flex-start",
-  },
-  button: {
-    backgroundColor: "#000000",
-    color: "#ffffff",
-    borderColor: "#ffffff00",
-    textDecorationLine: "none",
-    textDecorationColor: "#ffffff",
-    borderRadius: 15,
-    width: 200,
-    height: 60,
-    marginBottom: 20,
-    textAlign: "center",
-    textAlignVertical: "center",
-    alignContent: "space-evenly",
-  },
-  input: {
-    borderColor: "#000000",
-    borderWidth: 1,
-    borderRadius: 10,
-    width: 200,
-    padding: 10,
-    height: 40,
-  },
-  title: {
-    fontSize: 45,
-    fontWeight: "bold",
-  },
-});
+export async function signIn(email: string, password: string) {
+  const result = await signInWithEmail(email, password);
+  if (!result.error) {
+    router.replace("/(tabs)");
+  } else {
+    alert("Credenciais erradas!");
+    router.reload();
+  }
+}

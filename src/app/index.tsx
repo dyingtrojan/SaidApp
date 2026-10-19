@@ -1,7 +1,19 @@
-import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { styles } from "@/components/styles";
+import { Link, router } from "expo-router";
+import { useEffect } from "react";
+import { Text, View } from "react-native";
+import { checkIfLogged } from "./auth/authContext";
 
 export default function Index() {
+  useEffect(() => {
+    async function checkLogin() {
+      const logged = await checkIfLogged();
+      if (logged == true) {
+        router.replace("/(tabs)");
+      }
+    }
+    checkLogin();
+  });
   return (
     <View style={styles.container}>
       <Text style={styles.title}>SaidApp</Text>
@@ -21,39 +33,3 @@ export default function Index() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 45,
-    fontWeight: "bold",
-  },
-  buttons: {
-    marginTop: 40,
-  },
-  button: {
-    backgroundColor: "#000000",
-    color: "#ffffff",
-    borderColor: "#ffffff00",
-    textDecorationLine: "none",
-    textDecorationColor: "#ffffff",
-    borderRadius: 15,
-    width: 200,
-    height: 60,
-    marginBottom: 20,
-    textAlign: "center",
-    textAlignVertical: "center",
-    alignContent: "space-evenly",
-  },
-  a: {
-    textDecorationLine: "none",
-    textDecorationColor: "white",
-    color: "white",
-    textAlign: "center",
-    alignItems: "center",
-  },
-});
