@@ -143,6 +143,26 @@ export async function editarGrupo(
   return { success: true, data };
 }
 
+// eventos
+export async function createEvent(descricao: string, grupoId: number, usuariocriadorid: string) {
+  const { data, error } = await supabase.from('eventos').insert({ descricao: descricao, usuariocriadorid: usuariocriadorid, grupoid: grupoId }).select().single();
+  if (error) {
+    console.log("Houve um error: " + error);
+    return { success: false, error }
+  }
+  return { success: true, data }
+}
+
+export async function getEventsOfGroup(grupoId: number) {
+  const { data, error } = await supabase.from('eventos').select('*').eq('grupoid', grupoId);
+  if (error) {
+    console.log("Erro ao tentar buscar eventos em um grupo: " + error)
+    return { success: false, error }
+  }
+  return { success: true, data }
+}
+
+
 // miscleaneas
 
 export async function uploadProfilePicture(userID: string, localUri: string) {

@@ -1,3 +1,4 @@
+import { getUserID } from "@/app/auth/authContext";
 import { Button } from "@/components/button";
 import { styles } from "@/components/styles";
 import { editarGrupo, getGroup } from "@/lib/databaseHandler";
@@ -15,17 +16,21 @@ export default function EditarPerfil() {
 
   const [newName, setNewName] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [image, setImage] = useState<string | null>(null);
 
   const defaultProfilePicture = require("@/assets/images/default_profile_picture.png");
   useEffect(() => {
     async function fetchGroup() {
       const resultado = await getGroup(grupoId);
+      const UserId = await getUserID();
       if (resultado?.data) {
         setData(resultado.data);
         setNewName(resultado.data.nome);
         setNewDescription(resultado.data.descricao);
+      }
+      if (data?.usuarioCriadorId != UserId) {
+        alert("Você não pode alterar o grupo.")
+        router.replace("/(tabs)/grupos");
       }
     }
     fetchGroup();

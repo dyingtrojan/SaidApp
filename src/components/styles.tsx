@@ -7,6 +7,14 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
   },
+  form: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "#666565",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 20,
+  },
   genericContainer: {
     flex: 1,
   },
