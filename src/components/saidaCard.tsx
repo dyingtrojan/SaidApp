@@ -5,7 +5,7 @@ type SaidaCardProps = {
   titulo: string;
   local: string;
   grupo: string;
-  imagemPath: string;
+  imagemPath?: string;
 };
 
 export function SaidaCard(props: SaidaCardProps) {
