@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    width: 200,
+    width: 500,
     height: 80,
   },
   containerScroll: {
@@ -73,7 +73,8 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    width: 200,
+    minWidth: "100%",
+    width: "auto",
     height: 40,
   },
   title: {
