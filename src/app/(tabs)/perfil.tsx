@@ -1,4 +1,5 @@
 import { Button } from "@/components/button";
+import { NotApparentButton } from "@/components/notApparentButton";
 import { styles } from "@/components/styles";
 import {
   getInterestsOfUser,
@@ -71,6 +72,8 @@ export default function Perfil() {
         {interesses?.map((interesse) => (
           <Text key={interesse.id}>· {interesse.nome}</Text>
         ))}
+        <Text>{"\n"}</Text>
+        <NotApparentButton text="Adicionar interesse" onClick={() => router.push("/perfil/interesses")} />
       </View>
     </View>
   );
