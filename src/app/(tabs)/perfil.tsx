@@ -1,11 +1,15 @@
 import { Button } from "@/components/button";
 import { styles } from "@/components/styles";
-import { getUserLoggedInInfo } from "@/lib/databaseHandler";
+import {
+  getInterestsOfUser,
+  getUserLoggedInInfo
+} from "@/lib/databaseHandler";
 import { supabase } from "@/lib/supabaseClient";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { logOut } from "../auth/authContext";
+import { Interesse } from "../interfaces/interesse";
 import { Usuarios } from "../interfaces/usuarios";
 
 export default function Perfil() {
@@ -13,9 +17,11 @@ export default function Perfil() {
   const [data, setData] = useState<Usuarios | null>(null);
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState<string | null>(null);
+  const [interesses, setInteresses] = useState<Interesse[] | null>(null);
 
   useEffect(() => {
     async function fetchData() {
+      // pegar info do usuario
       const resultado = await getUserLoggedInInfo();
       if (resultado && !resultado.error) {
         const usuario = resultado.data as Usuarios;
@@ -28,7 +34,16 @@ export default function Perfil() {
           setImage(urlData.publicUrl);
         }
       }
-      setLoading(false);
+
+      // pegar interesses do usuario
+      try {
+        const resInteresses = await getInterestsOfUser(resultado.data.id);
+        setInteresses(resInteresses);
+      } catch (error) {
+        console.log("houve um erro: " + error);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchData();
   }, []);
@@ -51,7 +66,12 @@ export default function Perfil() {
         />
         <Button text="Sair" onClick={() => logOutofAccount()} />
       </View>
-      <View style={{ flex: 5 }}></View>
+      <View style={{ flex: 5, padding: 20 }}>
+        <Text style={styles.subtitle}>Interesses</Text>
+        {interesses?.map((interesse) => (
+          <Text key={interesse.id}>· {interesse.nome}</Text>
+        ))}
+      </View>
     </View>
   );
 }

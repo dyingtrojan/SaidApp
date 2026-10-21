@@ -1,5 +1,6 @@
 import { getUserID } from "@/app/auth/authContext";
 import { Grupo } from "@/app/interfaces/grupo";
+import { Interesse } from "@/app/interfaces/interesse";
 import { decode } from "base64-arraybuffer";
 import * as FileSystem from "expo-file-system/legacy";
 import { Platform } from "react-native";
@@ -144,24 +145,79 @@ export async function editarGrupo(
 }
 
 // eventos
-export async function createEvent(descricao: string, grupoId: number, usuariocriadorid: string) {
-  const { data, error } = await supabase.from('eventos').insert({ descricao: descricao, usuariocriadorid: usuariocriadorid, grupoid: grupoId }).select().single();
+export async function createEvent(
+  descricao: string,
+  grupoId: number,
+  usuariocriadorid: string,
+) {
+  const { data, error } = await supabase
+    .from("eventos")
+    .insert({
+      descricao: descricao,
+      usuariocriadorid: usuariocriadorid,
+      grupoid: grupoId,
+    })
+    .select()
+    .single();
   if (error) {
     console.log("Houve um error: " + error);
-    return { success: false, error }
+    return { success: false, error };
   }
-  return { success: true, data }
+  return { success: true, data };
 }
 
 export async function getEventsOfGroup(grupoId: number) {
-  const { data, error } = await supabase.from('eventos').select('*').eq('grupoid', grupoId);
+  const { data, error } = await supabase
+    .from("eventos")
+    .select("*")
+    .eq("grupoid", grupoId);
   if (error) {
-    console.log("Erro ao tentar buscar eventos em um grupo: " + error)
-    return { success: false, error }
+    console.log("Erro ao tentar buscar eventos em um grupo: " + error);
+    return { success: false, error };
   }
-  return { success: true, data }
+  return { success: true, data };
 }
 
+// interesse
+
+export async function getInteresse(interestId: number) {
+  const { data, error } = await supabase
+    .from("interesses")
+    .select("*")
+    .eq("id", interestId)
+    .single();
+  if (error) {
+    console.log("houve um erro: " + error);
+    return { success: false, error };
+  }
+  return { data };
+}
+
+export async function getInterestsOfUser(userId: string) {
+  const { data, error } = await supabase
+    .from("fkusuariosinteresses")
+    .select("*")
+    .eq("usuarioid", userId);
+  if (error) {
+    console.log("houve um erro: " + error);
+    return [];
+  }
+  var interesses: Interesse[] = [];
+  for (let index = 0; index < data.length; index++) {
+    const interTemp = await getInteresse(data[index].interesseid);
+    interesses.push(interTemp.data);
+  }
+  return interesses;
+}
+
+export async function getAllInterests() {
+  const { data, error } = await supabase.from("interesses").select("*");
+  if (error) {
+    console.log("Um erro ocorreu: " + error);
+    return { success: false, error };
+  }
+  return { data };
+}
 
 // miscleaneas
 
@@ -191,4 +247,42 @@ export async function uploadProfilePicture(userID: string, localUri: string) {
   }
 
   return fileName;
+}
+
+// faça um bagulho que ele primeiro checa os interesses do grupo, apaga os que foram requisitados e adiciona os novos
+
+export async function getGroupInterests(groupId: number) {
+  const { data, error } = await supabase
+    .from("fkgrupointeresses")
+    .select("*")
+    .eq("grupoid", groupId);
+  if (error) {
+    console.log("Houve um erro: " + error);
+    return { success: false, error };
+  }
+  return { data };
+}
+
+export async function addInterestsToGroup(
+  groupId: number,
+  interests: number[],
+) {
+  const result = await getGroupInterests(groupId);
+  if (result.data?.length != 0) {
+    const { data, error } = await supabase
+      .from("fkgrupointeresses")
+      .delete()
+      .eq("grupoid", groupId);
+  }
+  for (let index = 0; index < interests.length; index++) {
+    const { error } = await supabase
+      .from("fkgrupointeresses")
+      .insert({ grupoid: groupId, interesseid: interests[index] });
+
+    if (error) {
+      console.log("Um erro ocorreu: " + error);
+      return { success: false, error };
+    }
+  }
+  return { success: true };
 }
