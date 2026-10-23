@@ -285,6 +285,20 @@ export async function getGroupInterests(groupId: number) {
   return { data };
 }
 
+export async function getGroupsWithInterests(interestsID: Interesse[]) {
+  var groupsArray = []
+  for (let index = 0; index < interestsID.length; index++) {
+    const { data, error } = await supabase.from("fkgrupointeresses").select("*").eq("interesseid", interestsID[index].id)
+    if (error) {
+      console.log("Erro: " + error)
+      return []
+    }
+    console.log(data)
+    groupsArray.push(data)
+  }
+  return groupsArray
+}
+
 export async function addInterestsToGroup(
   groupId: number,
   interests: number[],
@@ -334,6 +348,23 @@ export async function getUserFriendship(userID: string) {
     return [];
   }
   return data;
+}
+
+export async function acceptFriendship(user1Id: string, user2Id: string){
+  const {data, error} = await supabase.from("amizades").update({usuario1id:user1Id, usuario2id: user2Id, acceptance_level: 1 }).eq("usuario1id", user1Id).eq("usuario2id", user2Id).select("*")
+  if (error){
+    console.log(error)
+    return error
+  }
+  return data
+}
+export async function removeFriendship(user1Id: string, user2Id: string){
+  const {data, error} = await supabase.from("amizades").delete().eq("usuario1id", user1Id).eq("usuario2id", user2Id).select("*")
+  if (error){
+    console.log(error)
+    return error
+  }
+  return data
 }
 
 // miscleaneas

@@ -20,12 +20,12 @@ export default function TabsLayout() {
         options={{ title: "Eventos", animation: "shift" }}
       />
       <Tabs.Screen
-        name="perfil"
-        options={{ title: "Perfil", animation: "shift" }}
-      />
-      <Tabs.Screen
         name="amizades"
         options={{ title: "Amizades", animation: "shift" }}
+      />
+      <Tabs.Screen
+        name="perfil"
+        options={{ title: "Perfil", animation: "shift" }}
       />
     </Tabs>
   );
