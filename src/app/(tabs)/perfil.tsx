@@ -1,14 +1,12 @@
 import { Button } from "@/components/button";
 import { NotApparentButton } from "@/components/notApparentButton";
 import { styles } from "@/components/styles";
-import {
-  getInterestsOfUser,
-  getUserLoggedInInfo
-} from "@/lib/databaseHandler";
+import { getInterestsOfUser, getUserLoggedInInfo } from "@/lib/databaseHandler";
 import { supabase } from "@/lib/supabaseClient";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { logOut } from "../auth/authContext";
 import { Interesse } from "../interfaces/interesse";
 import { Usuarios } from "../interfaces/usuarios";
@@ -49,7 +47,7 @@ export default function Perfil() {
     fetchData();
   }, []);
   return (
-    <View style={styles.genericContainer}>
+    <SafeAreaView style={styles.genericContainer}>
       <View style={styles.trueHeader}>
         <View>
           <Image
@@ -73,9 +71,12 @@ export default function Perfil() {
           <Text key={interesse.id}>· {interesse.nome}</Text>
         ))}
         <Text>{"\n"}</Text>
-        <NotApparentButton text="Adicionar interesse" onClick={() => router.push("/perfil/interesses")} />
+        <NotApparentButton
+          text="Adicionar interesse"
+          onClick={() => router.push("/perfil/interesses")}
+        />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

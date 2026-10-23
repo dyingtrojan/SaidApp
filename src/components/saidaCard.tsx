@@ -12,7 +12,6 @@ export function SaidaCard(props: SaidaCardProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{props.titulo}</Text>
-
       <Text>{props.local}</Text>
       <Text>{props.grupo}</Text>
       <Button

@@ -1,8 +1,8 @@
 import { Button } from "@/components/button";
 import { styles } from "@/components/styles";
 import {
-    createEvent,
-    getGroupsLocalUserIsMemberInfo
+  createEvent,
+  getGroupsLocalUserIsMemberInfo,
 } from "@/lib/databaseHandler";
 import { Link, router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -81,7 +81,7 @@ export default function CriarEvento() {
         />
         <Text>{"\n"}</Text>
         <Button
-          text="Criar event"
+          text="Criar evento"
           onClick={() => CreateEvent(descricao, value, userID)}
         />
       </View>

@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
   },
   genericContainer: {
     flex: 1,
+    padding: 10,
   },
   multilineInput: {
     borderColor: "#000000",
@@ -77,6 +78,15 @@ export const styles = StyleSheet.create({
     width: "auto",
     height: 40,
   },
+  searchInput: {
+    borderColor: "#000000",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    minWidth: "90%",
+    width: "auto",
+    height: 40,
+  },
   title: {
     fontSize: 45,
     fontWeight: "bold",
@@ -84,6 +94,11 @@ export const styles = StyleSheet.create({
   subtitle: {
     fontSize: 32,
     fontWeight: "semibold",
+  },
+  subtitle2: {
+    fontSize: 16,
+    fontWeight: "condensed",
+    color: "#303030",
   },
   grupoCard: {
     alignItems: "center",
