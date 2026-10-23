@@ -7,10 +7,26 @@ export default function TabsLayout() {
         headerShown: false,
       }}
     >
-      <Tabs.Screen name="index" options={{ title: "Inicial" }} />
-      <Tabs.Screen name="grupos" options={{ title: "Grupos" }} />
-      <Tabs.Screen name="eventos" options={{ title: "Eventos" }} />
-      <Tabs.Screen name="perfil" options={{ title: "Perfil" }} />
+      <Tabs.Screen
+        name="index"
+        options={{ title: "Inicial", animation: "shift" }}
+      />
+      <Tabs.Screen
+        name="grupos"
+        options={{ title: "Grupos", animation: "shift" }}
+      />
+      <Tabs.Screen
+        name="eventos"
+        options={{ title: "Eventos", animation: "shift" }}
+      />
+      <Tabs.Screen
+        name="perfil"
+        options={{ title: "Perfil", animation: "shift" }}
+      />
+      <Tabs.Screen
+        name="amizades"
+        options={{ title: "Amizades", animation: "shift" }}
+      />
     </Tabs>
   );
 }

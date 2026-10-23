@@ -1,45 +1,61 @@
 import { getUserID } from "@/app/auth/authContext";
 import { Interesse } from "@/app/interfaces/interesse";
-import { addInterestOfUser, deleteInterestOfUser, getInterestsOfUser } from "@/lib/databaseHandler";
+import {
+  addInterestOfUser,
+  deleteInterestOfUser,
+  getInterestsOfUser,
+} from "@/lib/databaseHandler";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type SelectItemProp = {
   text: string;
-  id: number,
+  id: number;
   onClick: any;
 };
 
 export function SelectItem(props: SelectItemProp) {
-  const [check, setCheck] = useState("");
+  const [check, setCheck] = useState("| Analisando...");
 
   useEffect(() => {
     async function checkInterest() {
       const res = await getInterestsOfUser(await getUserID());
-      if (res.find((interesse: Interesse) => interesse.id == props.id) != undefined){
-        setCheck("| ✓")
-      }else{
-        setCheck("")
+      if (
+        res.find((interesse: Interesse) => interesse.id == props.id) !=
+        undefined
+      ) {
+        setCheck("| ✓");
+      } else {
+        setCheck("");
       }
-  }
-    checkInterest()
-  }, [])
+    }
+    checkInterest();
+  }, []);
 
   async function checkInterest() {
-    setCheck("| Analisando...")
+    setCheck("| Analisando...");
     const res = await getInterestsOfUser(await getUserID());
-    if (res.find((interesse: Interesse) => interesse.id == props.id) != undefined){
+    if (
+      res.find((interesse: Interesse) => interesse.id == props.id) != undefined
+    ) {
       await deleteInterestOfUser(props.id);
-      setCheck("")
-    }else{
+      setCheck("");
+    } else {
       await addInterestOfUser(props.id);
-      setCheck("| ✓")
+      setCheck("| ✓");
     }
   }
   return (
     <View style={styles.button}>
-      <Pressable onPress={() => {checkInterest()}}>
-        <Text style={styles.a}>{props.text} {check}</Text>
+      <Pressable
+        onPress={() => {
+          checkInterest();
+        }}
+        disabled={check == "| Analisando..." ? true : false}
+      >
+        <Text style={styles.a}>
+          {props.text} {check}
+        </Text>
       </Pressable>
     </View>
   );

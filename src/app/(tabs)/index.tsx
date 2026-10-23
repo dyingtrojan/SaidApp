@@ -2,6 +2,7 @@ import { styles } from "@/components/styles";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { ScrollView, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { checkIfLogged } from "../auth/authContext";
 
 export default function TelaInicial() {
@@ -12,24 +13,25 @@ export default function TelaInicial() {
         router.replace("/");
       }
     }
-    checkLogin()
+    checkLogin();
   }, []);
   const router = useRouter();
   return (
-    <ScrollView style={styles.containerScroll}>
-      <Text style={styles.subtitle}>
-        Eventos marcados em grupos que participa
-      </Text>
-      <Text>{"\n"}</Text>
-      <ScrollView horizontal style={styles.sidewaysContainer}>
-      </ScrollView>
-      <Text>{"\n"}</Text>
-      <ScrollView>
+    <SafeAreaView>
+      <ScrollView style={{ padding: 10 }}>
         <Text style={styles.subtitle}>
-          Recomendações de grupos para participar
+          Eventos marcados em grupos que participa
         </Text>
         <Text>{"\n"}</Text>
+        <ScrollView horizontal style={styles.sidewaysContainer}></ScrollView>
+        <Text>{"\n"}</Text>
+        <ScrollView>
+          <Text style={styles.subtitle}>
+            Recomendações de grupos para participar
+          </Text>
+          <Text>{"\n"}</Text>
+        </ScrollView>
       </ScrollView>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
