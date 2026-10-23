@@ -52,7 +52,10 @@ export async function signIn(email: string, password: string) {
   if (!result.error) {
     router.replace("/(tabs)");
   } else {
+  if(password.length < 6){
+    alert("A senha deve ser maior que 6 caracteres")
+  }
     alert("Credenciais erradas!");
-    router.reload();
+    router.replace("/auth/login");
   }
 }

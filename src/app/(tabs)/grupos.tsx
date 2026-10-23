@@ -26,7 +26,8 @@ export default function Grupos() {
     fetchData();
   }, []);
   return (
-    <SafeAreaView>
+    <ScrollView>
+          <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
           <View>
@@ -60,5 +61,6 @@ export default function Grupos() {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </ScrollView>
   );
 }
