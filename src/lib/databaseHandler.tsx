@@ -90,6 +90,60 @@ export async function getUserById(userId: string) {
 }
 
 // grupo
+
+export async function deleteGroup(groupId: number) {
+  const del_mem_list = await removeAllMembersFromGroup(groupId);
+  const del_int_list = await removeAllInterestsFromGroup(groupId);
+  const { data, error } = await supabase
+    .from("grupos")
+    .delete()
+    .eq("id", groupId)
+    .select("*");
+  if (error) {
+    console.log("Erro: " + error);
+    return { success: false, error };
+  }
+  return { success: true, data };
+}
+
+export async function removeAllMembersFromGroup(groupId: number) {
+  const { data, error } = await supabase
+    .from("fkgrupousuario")
+    .delete()
+    .eq("grupoid", groupId)
+    .select("*");
+  if (error) {
+    console.log("Erro: " + error);
+    return { success: false, error };
+  }
+  return { success: true, data };
+}
+
+export async function removeAllInterestsFromGroup(groupId: number) {
+  const { data, error } = await supabase
+    .from("fkgrupointeresses")
+    .delete()
+    .eq("grupoid", groupId)
+    .select("*");
+  if (error) {
+    console.log("Erro: " + error);
+    return { success: false, error };
+  }
+  return { success: true, data };
+}
+
+export async function removeMemberFromGroup(groupId: number, userId: string) {
+  const { data, error } = await supabase
+    .from("fkgrupousuario")
+    .delete()
+    .eq("grupoid", groupId)
+    .eq("usuarioid", userId);
+  if (error) {
+    return { error };
+  }
+  return { data };
+}
+
 export async function getGroup(grupoId: number) {
   const { data, error } = await supabase
     .from("grupos")
@@ -173,12 +227,69 @@ export async function editarGrupo(
   }
   return { success: true, data };
 }
+export async function getGroupMembers(groupId: number) {
+  const { data, error } = await supabase
+    .from("fkgrupousuario")
+    .select("usuarioid")
+    .eq("grupoid", groupId);
+  if (error) {
+    console.log("erro: " + error);
+    return {};
+  }
+  return { data };
+}
+
+// moderadores + admin
+export async function isModerador(userId: string) {
+  const { data } = await supabase
+    .from("moderadores")
+    .select("id")
+    .eq("id", userId)
+    .maybeSingle();
+  return !!data;
+}
+
+export async function isAdministrador(userId: string) {
+  const { data } = await supabase
+    .from("administradores")
+    .select("id")
+    .eq("id", userId)
+    .maybeSingle();
+  return !!data;
+}
+
+export async function podeModerar(userId: string) {
+  return (await isModerador(userId)) || (await isAdministrador(userId));
+}
+
+export async function banirUsuario(userId: string) {
+  // limpa relações primeiro pra não dar erro de FK
+  await supabase.from("fkgrupousuario").delete().eq("usuarioid", userId);
+  await supabase.from("fkusuariosinteresses").delete().eq("usuarioid", userId);
+  await supabase
+    .from("amizades")
+    .delete()
+    .or(`usuario1id.eq.${userId},usuario2id.eq.${userId}`);
+
+  const { data, error } = await supabase
+    .from("usuarios")
+    .delete()
+    .eq("id", userId)
+    .select();
+  if (error) {
+    console.log("Erro ao banir usuario: " + error);
+    return { success: false, error };
+  }
+  return { success: true, data };
+}
 
 // eventos
 export async function createEvent(
   descricao: string,
   grupoId: number,
   usuariocriadorid: string,
+  dataHora: string,
+  localid: number,
 ) {
   const { data, error } = await supabase
     .from("eventos")
@@ -186,6 +297,8 @@ export async function createEvent(
       descricao: descricao,
       usuariocriadorid: usuariocriadorid,
       grupoid: grupoId,
+      datahora: dataHora,
+      localid: localid,
     })
     .select()
     .single();
@@ -207,6 +320,54 @@ export async function getEventsOfGroup(grupoId: number) {
   }
   return { success: true, data };
 }
+export async function deleteEvent(eventoId: number) {
+  const { data, error } = await supabase
+    .from("eventos")
+    .delete()
+    .eq("id", eventoId)
+    .select();
+  if (error) {
+    console.log("Erro ao deletar evento: " + error);
+    return { success: false, error };
+  }
+  return { success: true, data };
+}
+export async function getEvento(eventoId: number) {
+  const { data, error } = await supabase
+    .from("eventos")
+    .select("*")
+    .eq("id", eventoId)
+    .single();
+  if (error) {
+    console.log("Erro ao buscar evento: " + error);
+    return { success: false, error };
+  }
+  return { data };
+}
+
+export async function editEvent(
+  eventoID: number,
+  descricao: string,
+  grupoId: number,
+  usuariocriadorid: string,
+  dataHora: string,
+) {
+  const { data, error } = await supabase
+    .from("eventos")
+    .update({
+      descricao: descricao,
+      usuariocriadorid: usuariocriadorid,
+      grupoid: grupoId,
+      datahora: dataHora,
+    })
+    .eq("id", eventoID);
+  if (error) {
+    console.log("Houve um error: " + error);
+    return { success: false, error };
+  }
+  return { success: true, data };
+}
+
 // interesse
 
 export async function getInteresse(interestId: number) {
@@ -286,17 +447,20 @@ export async function getGroupInterests(groupId: number) {
 }
 
 export async function getGroupsWithInterests(interestsID: Interesse[]) {
-  var groupsArray = []
+  var groupsArray = [];
   for (let index = 0; index < interestsID.length; index++) {
-    const { data, error } = await supabase.from("fkgrupointeresses").select("*").eq("interesseid", interestsID[index].id)
+    const { data, error } = await supabase
+      .from("fkgrupointeresses")
+      .select("*")
+      .eq("interesseid", interestsID[index].id)
+      .limit(20);
     if (error) {
-      console.log("Erro: " + error)
-      return []
+      console.log("Erro: " + error);
+      return [];
     }
-    console.log(data)
-    groupsArray.push(data)
+    groupsArray.push(data);
   }
-  return groupsArray
+  return groupsArray;
 }
 
 export async function addInterestsToGroup(
@@ -350,21 +514,80 @@ export async function getUserFriendship(userID: string) {
   return data;
 }
 
-export async function acceptFriendship(user1Id: string, user2Id: string){
-  const {data, error} = await supabase.from("amizades").update({usuario1id:user1Id, usuario2id: user2Id, acceptance_level: 1 }).eq("usuario1id", user1Id).eq("usuario2id", user2Id).select("*")
-  if (error){
-    console.log(error)
-    return error
+export async function acceptFriendship(user1Id: string, user2Id: string) {
+  const { data, error } = await supabase
+    .from("amizades")
+    .update({ usuario1id: user1Id, usuario2id: user2Id, acceptance_level: 1 })
+    .eq("usuario1id", user1Id)
+    .eq("usuario2id", user2Id)
+    .select("*");
+  if (error) {
+    console.log(error);
+    return error;
   }
-  return data
+  return data;
 }
-export async function removeFriendship(user1Id: string, user2Id: string){
-  const {data, error} = await supabase.from("amizades").delete().eq("usuario1id", user1Id).eq("usuario2id", user2Id).select("*")
-  if (error){
-    console.log(error)
-    return error
+export async function removeFriendship(user1Id: string, user2Id: string) {
+  const { data, error } = await supabase
+    .from("amizades")
+    .delete()
+    .eq("usuario1id", user1Id)
+    .eq("usuario2id", user2Id)
+    .select("*");
+  if (error) {
+    console.log(error);
+    return error;
   }
-  return data
+  return data;
+}
+
+// locais
+export async function getLocal(localId: number) {
+  const { data, error } = await supabase
+    .from("locais")
+    .select("*")
+    .eq("id", localId)
+    .single();
+  if (error) {
+    console.log("Erro ao buscar local: " + error);
+    return { success: false, error };
+  }
+  return { data };
+}
+
+export async function criarLocal(nome: string, descricao: string) {
+  const { data, error } = await supabase
+    .from("locais")
+    .insert({ nome: nome, descricao: descricao })
+    .select()
+    .single();
+  if (error) {
+    console.log("Erro ao criar local: " + error);
+    return { success: false, error };
+  }
+  return { success: true, data };
+}
+
+export async function getLocais() {
+  const { data, error } = await supabase.from("locais").select("*");
+  if (error) {
+    console.log("Erro ao listar locais: " + error);
+    return { success: false, error };
+  }
+  return { data };
+}
+
+export async function deleteLocal(localId: number) {
+  const { data, error } = await supabase
+    .from("locais")
+    .delete()
+    .eq("id", localId)
+    .select();
+  if (error) {
+    console.log("Erro ao deletar local: " + error);
+    return { success: false, error };
+  }
+  return { success: true, data };
 }
 
 // miscleaneas

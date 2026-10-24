@@ -31,6 +31,19 @@ export async function signInWithEmail(email: string, password: string) {
     console.log("Um erro ocorreu: " + error);
     return { success: false, error };
   }
+
+  const userId = data.user.id;
+  const { data: usuarioData } = await supabase
+    .from("usuarios")
+    .select("id")
+    .eq("id", userId)
+    .maybeSingle();
+
+  if (!usuarioData) {
+    await supabase.auth.signOut();
+    return { success: false, error: { message: "Conta removida ou banida." } };
+  }
+
   return { success: true };
 }
 
@@ -47,7 +60,8 @@ export async function getUserID(): Promise<string> {
   const { data } = await supabase.auth.getSession();
   const user_id = data.session?.user.id;
   if (!user_id) {
-    throw new Error("Usuario não está autenticado.");
+    console.log("Usuario não está autenticado.");
+    return "";
   }
   return user_id;
 }

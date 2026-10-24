@@ -74,6 +74,9 @@ export async function signUp(
   password: string,
   userName: string,
 ) {
+  if (password.length < 6) {
+    alert("A senha deve ser maior que 6 caracteres");
+  }
   await signUpNewUser(nome, email, password, userName);
   router.replace("/(tabs)");
 }

@@ -27,40 +27,41 @@ export default function Grupos() {
   }, []);
   return (
     <ScrollView>
-          <SafeAreaView>
-      <ScrollView>
-        <View style={styles.container}>
-          <View>
-            <View style={styles.fixedHeader}>
-              <Button
-                text="Criar grupo"
-                onClick={() => router.replace("/grupo/criar")}
-              />
-              <Button
-                text="Ver grupos que pode participar"
-                onClick={() => router.replace("/grupo/gruposSimilares")}
-              />
-            </View>
-          </View>
-          <Text>{"\n"}</Text>
-          <Text style={styles.subtitle}>Grupos você que participa</Text>
-          <Text>{"\n"}</Text>
-          <ScrollView>
-            {data?.map((grupo) => (
-              <View key={grupo.id}>
-                <GrupoCard
-                  key={grupo.id}
-                  id={grupo.id}
-                  nome={grupo.nome}
-                  descricao={grupo.descricao}
+      <SafeAreaView>
+        <ScrollView>
+          <View style={styles.container}>
+            <View>
+              <View style={styles.fixedHeader}>
+                <Button
+                  text="Criar grupo"
+                  onClick={() => router.replace("/grupo/criar")}
                 />
-                <Text>{"\n"}</Text>
+                <Button
+                  text="Ver grupos que pode participar"
+                  onClick={() => router.replace("/grupo/gruposSimilares")}
+                />
               </View>
-            ))}
-          </ScrollView>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+            </View>
+            <Text>{"\n"}</Text>
+            <Text style={styles.subtitle}>Grupos você que participa</Text>
+            <Text>{"\n"}</Text>
+            <ScrollView>
+              {data?.map((grupo) => (
+                <View key={grupo.id}>
+                  <GrupoCard
+                    key={grupo.id}
+                    id={grupo.id}
+                    nome={grupo.nome}
+                    descricao={grupo.descricao}
+                    usuarioCriadorID={grupo.usuariocriadorid}
+                  />
+                  <Text>{"\n"}</Text>
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </ScrollView>
   );
 }

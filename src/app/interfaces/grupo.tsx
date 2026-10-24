@@ -3,5 +3,5 @@ export interface Grupo {
   nome: string;
   descricao: string;
   dataCriacao?: Date;
-  usuarioCriadorId?: string;
+  usuariocriadorid: string;
 }

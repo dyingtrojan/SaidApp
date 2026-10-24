@@ -4,6 +4,7 @@ import { Button } from "@/components/button";
 import { styles } from "@/components/styles";
 import {
   addInterestsToGroup,
+  deleteGroup,
   editarGrupo,
   getGroup,
   getGroupInterests,
@@ -122,9 +123,16 @@ export default function EditarGrupo() {
           text="Alterar grupo"
           onClick={() => updateGroup(newName, newDescription, grupoId, value)}
         />
+        <Text>{"\n"}</Text>
+        <Button text="DELETAR GRUPO" onClick={() => delete_group(grupoId)} />
       </View>
     </View>
   );
+}
+
+async function delete_group(groupId: number) {
+  const res = await deleteGroup(groupId);
+  router.replace("/(tabs)/grupos");
 }
 async function updateGroup(
   nome: string,

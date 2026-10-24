@@ -14,7 +14,7 @@ export default function CriarGrupoPage() {
         <View style={styles.header}>
           <Link
             style={{ fontWeight: "500", fontSize: 20 }}
-            href={"/(tabs)/eventos"}
+            href={"/(tabs)/grupos"}
           >
             ← Voltar
           </Link>
