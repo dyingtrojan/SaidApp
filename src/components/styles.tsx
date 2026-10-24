@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    width: 500,
+    width: "100%",
     height: 80,
   },
   containerScroll: {

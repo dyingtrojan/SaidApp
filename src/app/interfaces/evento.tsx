@@ -6,4 +6,5 @@ export interface Evento {
   descricao: string;
   grupo: Grupo;
   local: Local;
+  datahora: string;
 }

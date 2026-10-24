@@ -1,5 +1,5 @@
 export interface Local {
-  id: number;
+  localid: number;
   nome: string;
   descricao: string;
 }
