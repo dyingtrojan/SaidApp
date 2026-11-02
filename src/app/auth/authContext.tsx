@@ -18,8 +18,8 @@ export async function signUpNewUser(
     console.log("Ocorreu um erro ao criar a conta: " + error);
     return { success: false, error };
   }
-  await signInWithEmail(email, password);
   await RegisterUser(nome, username);
+  await signInWithEmail(email, password);
   return { success: true, data };
 }
 export async function signInWithEmail(email: string, password: string) {

@@ -76,7 +76,16 @@ export async function signUp(
 ) {
   if (password.length < 6) {
     alert("A senha deve ser maior que 6 caracteres");
+    router.replace("/auth/cadastro");
+    return "Incorrect Password";
   }
-  await signUpNewUser(nome, email, password, userName);
-  router.replace("/(tabs)");
+  if (nome && email && userName && password) {
+    const res = await signUpNewUser(nome, email, password, userName);
+    if (res.success == false) {
+      router.replace("/");
+    }
+    if (res.success && !res.error) {
+      router.replace("/(tabs)");
+    }
+  }
 }

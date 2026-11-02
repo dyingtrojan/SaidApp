@@ -104,6 +104,6 @@ async function updateFriendship(
     }
   } else if (acceptance_level == 1) {
     removeFriendship(user1Id, user2Id);
-    router.reload();
+    location.reload();
   }
 }
