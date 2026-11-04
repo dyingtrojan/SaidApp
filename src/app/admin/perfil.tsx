@@ -26,7 +26,7 @@ export default function ModeracaoUsuarios() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: "Moderação", headerShown: true }} />
+      <Stack.Screen options={{ title: "Perfil", headerShown: true }} />
       <Link style={{ fontWeight: "500", fontSize: 20 }} href={"/(tabs)/perfil"}>
         ← Voltar
       </Link>

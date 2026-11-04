@@ -5,7 +5,7 @@ import { getInterestsOfUser, getUserLoggedInInfo } from "@/lib/databaseHandler";
 import { supabase } from "@/lib/supabaseClient";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { logOut } from "../auth/authContext";
 import { Interesse } from "../interfaces/interesse";
@@ -47,36 +47,38 @@ export default function Perfil() {
     fetchData();
   }, []);
   return (
-    <SafeAreaView style={styles.genericContainer}>
-      <View style={styles.trueHeader}>
-        <View>
-          <Image
-            source={image ? { uri: image } : defaultProfilePicture}
-            style={{ width: 100, height: 100, borderRadius: 50 }}
-          />
-          <Text style={styles.title}>{data?.nome}</Text>
-          <Text style={styles.subtitle}>@{data?.username}</Text>
+    <ScrollView>
+      <SafeAreaView style={styles.genericContainer}>
+        <View style={styles.trueHeader}>
+          <View>
+            <Image
+              source={image ? { uri: image } : defaultProfilePicture}
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+            />
+            <Text style={styles.title}>{data?.nome}</Text>
+            <Text style={styles.subtitle}>@{data?.username}</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.buttonProfileEdit}>
-        <Button
-          text="Editar perfil"
-          onClick={() => router.replace("/perfil/editar")}
-        />
-        <Button text="Sair" onClick={() => logOutofAccount()} />
-      </View>
-      <View style={{ flex: 5, padding: 20 }}>
-        <Text style={styles.subtitle}>Interesses</Text>
-        {interesses?.map((interesse) => (
-          <Text key={interesse.id}>· {interesse.nome}</Text>
-        ))}
-        <Text>{"\n"}</Text>
-        <NotApparentButton
-          text="Adicionar interesse"
-          onClick={() => router.push("/perfil/interesses")}
-        />
-      </View>
-    </SafeAreaView>
+        <View style={styles.buttonProfileEdit}>
+          <Button
+            text="Editar perfil"
+            onClick={() => router.replace("/perfil/editar")}
+          />
+          <Button text="Sair" onClick={() => logOutofAccount()} />
+        </View>
+        <View style={{ flex: 5, padding: 20 }}>
+          <Text style={styles.subtitle}>Interesses</Text>
+          {interesses?.map((interesse) => (
+            <Text key={interesse.id}>· {interesse.nome}</Text>
+          ))}
+          <Text>{"\n"}</Text>
+          <NotApparentButton
+            text="Adicionar interesse"
+            onClick={() => router.push("/perfil/interesses")}
+          />
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 }
 
