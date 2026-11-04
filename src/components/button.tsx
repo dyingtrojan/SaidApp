@@ -8,7 +8,7 @@ type ButtonProp = {
 export function Button(props: ButtonProp) {
   return (
     <View style={styles.button}>
-      <Pressable onPress={props.onClick}>
+      <Pressable style={styles.pressable} onPress={props.onClick}>
         <Text style={styles.a}>{props.text}</Text>
       </Pressable>
     </View>
@@ -26,15 +26,16 @@ const styles = StyleSheet.create({
     width: 200,
     height: 60,
     marginBottom: 20,
-    textAlign: "center",
-    alignContent: "center",
-    justifyContent: "center",
   },
   a: {
     textDecorationLine: "none",
     textDecorationColor: "white",
     color: "white",
-    textAlign: "center",
-    alignSelf: "center",
   },
+  pressable: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center"
+  }
 });
