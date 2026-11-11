@@ -7,7 +7,7 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { logOut } from "../auth/authContext";
+import { checkIfLogged, logOut } from "../auth/authContext";
 import { Interesse } from "../interfaces/interesse";
 import { Usuarios } from "../interfaces/usuarios";
 
@@ -18,6 +18,15 @@ export default function Perfil() {
   const [image, setImage] = useState<string | null>(null);
   const [interesses, setInteresses] = useState<Interesse[] | null>(null);
 
+    useEffect(() => {
+      async function checkLogin() {
+        const check = await checkIfLogged();
+        if (check == false) {
+          router.replace("/auth/login");
+        }
+      }
+      checkLogin();
+    }, []);
   useEffect(() => {
     async function fetchData() {
       // pegar info do usuario

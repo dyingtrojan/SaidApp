@@ -9,6 +9,7 @@ export async function signUpNewUser(
   email: string,
   password: string,
   username: string,
+  dataNasc: Date
 ) {
   const { data, error } = await supabase.auth.signUp({
     email: email,
@@ -18,7 +19,7 @@ export async function signUpNewUser(
     console.log("Ocorreu um erro ao criar a conta: " + error);
     return { success: false, error };
   }
-  await RegisterUser(nome, username);
+  await RegisterUser(nome, username, dataNasc);
   await signInWithEmail(email, password);
   return { success: true, data };
 }

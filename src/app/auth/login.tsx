@@ -4,14 +4,16 @@ import { Link, router } from "expo-router";
 import { useState } from "react";
 import { ScrollView, Text, TextInput, View } from "react-native";
 import { signInWithEmail } from "./authContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
+      <View>
         <View style={styles.login}>
           <View style={styles.header}>
             <Link style={{ fontWeight: "500", fontSize: 20 }} href={"/"}>
@@ -48,6 +50,7 @@ export default function LoginPage() {
         </View>
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 

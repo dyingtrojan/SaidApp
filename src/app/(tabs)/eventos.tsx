@@ -12,12 +12,21 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Evento } from "../interfaces/evento";
 import { Grupo } from "../interfaces/grupo";
+import { checkIfLogged } from "../auth/authContext";
 
 export default function Eventos() {
   const [eventos, setEventos] = useState<Evento[] | []>([]);
   const [loading, setLoading] = useState(true);
   const [grupos, setGrupos] = useState<Grupo[] | []>([]);
-
+  useEffect(() => {
+      async function checkLogin() {
+        const check = await checkIfLogged();
+        if (check == false) {
+          router.replace("/auth/login");
+        }
+      }
+      checkLogin();
+    }, []);
   useEffect(() => {
     async function fetchData() {
       const groupsLocalUser = await getGroupsLocalUserIsMemberInfo();

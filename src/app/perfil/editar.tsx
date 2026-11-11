@@ -1,5 +1,6 @@
 import { Button } from "@/components/button";
 import { styles } from "@/components/styles";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   EditUser,
   getUserLoggedInInfo,
@@ -11,8 +12,13 @@ import { useEffect, useState } from "react";
 import { Image, Text, TextInput, View } from "react-native";
 import { getUserID } from "../auth/authContext";
 import { Usuarios } from "../interfaces/usuarios";
+import { Platform } from "react-native";
 
 export default function EditarPerfil() {
+  const [open, setOpen] = useState(false);
+  const [dataNasc, setDataNasc] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+
   const [data, setData] = useState<Usuarios | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -92,10 +98,42 @@ export default function EditarPerfil() {
           text="Altere sua foto de perfil aqui"
           onClick={() => pickImage()}
         />
+                  <Text>{"\n"}</Text>
+          <Text>Data de nascimento</Text>
+          {Platform.OS === "web" ? (
+            <input
+              type="date"
+              onChange={(e) => setDataNasc(new Date(e.target.value))}
+              style={{
+                height: 40,
+                width: 200,
+                borderRadius: 10,
+                border: "1px solid #000",
+              }}
+            />
+          ) : (
+            <>
+              <Button
+                text={dataNasc.toLocaleDateString()}
+                onClick={() => setShowPicker(true)}
+              />
+              {showPicker && (
+                <View>
+                  <DateTimePicker
+                    value={dataNasc || new Date()}
+                    mode="date"
+                    display={Platform.OS === "ios" ? "spinner" : "default"}
+                    onDismiss={() => setOpen(false)}
+                  />
+                </View>
+              )}
+            </>
+          )}
+          <Text>{"\n"}</Text>
         <Button
           text="Alterar perfil"
           onClick={() =>
-            updateProfile(newName, newUserName, image || "", data?.id)
+            updateProfile(newName, newUserName, image || "",dataNasc, data?.id)
           }
         />
       </View>
@@ -106,6 +144,7 @@ async function updateProfile(
   nome: string,
   username: string,
   localUri: string,
+  dataNasc: Date,
   userID?: string,
 ) {
   try {
@@ -120,7 +159,7 @@ async function updateProfile(
       }
     }
 
-    const result = await EditUser(userID, nome, username, filename || "");
+    const result = await EditUser(userID, nome, username, filename || "", dataNasc);
     if (!result.success) {
       alert("Erro ao salvar perfil: " + JSON.stringify(result.error));
       return;

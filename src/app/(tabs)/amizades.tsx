@@ -11,7 +11,7 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getUserID } from "../auth/authContext";
+import { checkIfLogged, getUserID } from "../auth/authContext";
 import { Amizade } from "../interfaces/amizade";
 import { Usuarios } from "../interfaces/usuarios";
 
@@ -20,7 +20,15 @@ export default function Amizades() {
   const [amigos, setAmigos] = useState<Usuarios[]>([]);
 
   const [index, setIndex] = useState(0);
-
+  useEffect(() => {
+    async function checkLogin() {
+      const check = await checkIfLogged();
+      if (check == false) {
+        router.replace("/auth/login");
+      }
+    }
+    checkLogin();
+  }, []);
   useEffect(() => {
     async function fetchData() {
       const USER_ID = await getUserID();
