@@ -1,6 +1,7 @@
 import { getUserID } from "@/app/auth/authContext";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
+import { Divider } from '@rneui/themed';
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "./button";
 
@@ -48,15 +49,22 @@ export function SaidaCard(props: SaidaCardProps) {
 
   return (
     <View style={styles.container}>
+
       <Text style={styles.title}>{props.titulo}</Text>
-      <Text>{props.local}</Text>
-      <Text>{props.grupo}</Text>
-      <Text>{formatarData(props.data || "")}</Text>
+      <Divider/>
+      <Text style={{flexShrink: 1, textAlign: "center"}}>{props.local}</Text>
+      <Divider/>
+      <Text style={{flexShrink: 1, textAlign: "center"}}>{props.grupo}</Text>
+      <Divider/>
+      <Text style={{flexShrink: 1, textAlign: "center"}}>{formatarData(props.data || "")}</Text>
+      <Divider/>
       {ehCriador && (
-        <Button
+        <View style={{alignSelf: "center", justifyContent: "center", flex: 1}}>
+          <Button
           text="Editar evento"
           onClick={() => router.push(`/eventos/editar/${props.id}`)}
-        />
+          />
+        </View>
       )}
     </View>
   );
@@ -70,7 +78,8 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     width: 300,
-    height: 600,
+    height: "100%",
+    margin: 10
   },
   title: {
     textAlign: "center",

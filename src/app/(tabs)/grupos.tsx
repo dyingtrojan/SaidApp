@@ -40,6 +40,7 @@ export default function Grupos() {
       <SafeAreaView>
         <ScrollView>
           <View style={styles.container}>
+            <Text style={styles.title}>Grupos</Text>
             <View>
               <View style={styles.fixedHeader}>
                 <Button
