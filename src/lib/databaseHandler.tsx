@@ -22,10 +22,10 @@ export async function getUserByHandle(handle: string) {
   return { data };
 }
 
-export async function RegisterUser(nome: string, username: string) {
+export async function RegisterUser(nome: string, username: string, dataNasc: Date) {
   const { data, error } = await supabase
     .from("usuarios")
-    .insert({ nome: nome, username: username })
+    .insert({ nome: nome, username: username, datanascimento: dataNasc })
     .select()
     .single();
   if (error) {
@@ -40,12 +40,13 @@ export async function EditUser(
   newName: string,
   username: string,
   fotoperfil: string,
+  dataNasc: Date
 ) {
   username = username.replaceAll(" ", "_");
   username = username.replaceAll("@", "");
   const { data, error } = await supabase
     .from("usuarios")
-    .update({ nome: newName, username: username, fotoperfil: fotoperfil })
+    .update({ nome: newName, username: username, fotoperfil: fotoperfil, datanascimento: dataNasc })
     .eq("id", id);
   if (error) {
     console.log("ocorreu um erro: " + error);
