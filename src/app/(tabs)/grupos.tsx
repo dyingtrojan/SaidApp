@@ -7,11 +7,21 @@ import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Grupo } from "../interfaces/grupo";
+import { checkIfLogged } from "../auth/authContext";
 
 export default function Grupos() {
   const [data, setData] = useState<Grupo[] | null>(null);
   const [loading, setLoading] = useState(true);
-
+  
+  useEffect(() => {
+    async function checkLogin() {
+      const check = await checkIfLogged();
+      if (check == false) {
+        router.replace("/auth/login");
+      }
+    }
+    checkLogin();
+  }, []);
   useEffect(() => {
     async function fetchData() {
       try {

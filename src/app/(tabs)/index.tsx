@@ -25,7 +25,7 @@ export default function TelaInicial() {
     async function checkLogin() {
       const check = await checkIfLogged();
       if (check == false) {
-        router.replace("/");
+        router.replace("/auth/login");
       }
     }
     checkLogin();
