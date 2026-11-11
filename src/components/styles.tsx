@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     alignItems: "center",
@@ -37,6 +38,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     overflow: "scroll",
     flexDirection: "row",
+    rowGap: 20
   },
   fixedHeader: {
     marginTop: 20,
@@ -121,15 +123,16 @@ export const styles = StyleSheet.create({
     width: 200,
     height: 60,
     marginBottom: 20,
-    textAlign: "center",
-    textAlignVertical: "center",
-    alignContent: "space-evenly",
   },
   a: {
     textDecorationLine: "none",
     textDecorationColor: "white",
     color: "white",
-    textAlign: "center",
-    alignItems: "center",
   },
+  pressable: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center"
+  }
 });
