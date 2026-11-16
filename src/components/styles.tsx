@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     alignItems: "center",
@@ -68,6 +67,7 @@ export const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   buttonProfileEdit: {
+    alignSelf: "flex-end",
     flexDirection: "row",
     alignContent: "flex-end",
   },
@@ -124,15 +124,39 @@ export const styles = StyleSheet.create({
     height: 60,
     marginBottom: 20,
   },
+  wnabutton: {
+    backgroundColor: "#00000000",
+    borderBottomColor: "#000000",
+    borderWidth: 1,
+    color: "#000000",
+    borderColor: "#ffffff00",
+    textDecorationLine: "none",
+    textDecorationColor: "#ffffff",
+    borderRadius: 15,
+    width: 150,
+    height: 45,
+    marginBottom: 20,
+  },
   a: {
     textDecorationLine: "none",
     textDecorationColor: "white",
     color: "white",
   },
+  wnaA: {
+    flex: 1,
+    color: "black",
+  },
+  buttonA: {
+    flex: 1,
+    color: "white",
+  },
   pressable: {
     width: "100%",
     height: "100%",
+    alignContent: "center",
     justifyContent: "center",
-    alignItems: "center"
+    marginTop: 20,
+    alignItems: "center",
+    alignSelf: "center", 
   }
 });

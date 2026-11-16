@@ -8,6 +8,7 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Grupo } from "../interfaces/grupo";
 import { checkIfLogged } from "../auth/authContext";
+import { WayNotApparentButton } from "@/components/wayNotApparentButton";
 
 export default function Grupos() {
   const [data, setData] = useState<Grupo[] | null>(null);
@@ -43,11 +44,11 @@ export default function Grupos() {
             <Text style={styles.title}>Grupos</Text>
             <View>
               <View style={styles.fixedHeader}>
-                <Button
+                <WayNotApparentButton
                   text="Criar grupo"
                   onClick={() => router.replace("/grupo/criar")}
                 />
-                <Button
+                <WayNotApparentButton
                   text="Ver grupos que pode participar"
                   onClick={() => router.replace("/grupo/gruposSimilares")}
                 />
