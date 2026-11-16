@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { checkIfLogged, logOut } from "../auth/authContext";
 import { Interesse } from "../interfaces/interesse";
 import { Usuarios } from "../interfaces/usuarios";
+import { WayNotApparentButton } from "@/components/wayNotApparentButton";
 
 export default function Perfil() {
   const defaultProfilePicture = require("@/assets/images/default_profile_picture.png");
@@ -66,15 +67,17 @@ export default function Perfil() {
             />
             <Text style={styles.title}>{data?.nome}</Text>
             <Text style={styles.subtitle}>@{data?.username}</Text>
+             <View style={styles.buttonProfileEdit}>
+            <WayNotApparentButton
+              text="Editar perfil"
+              onClick={() => router.replace("/perfil/editar")}
+            />
+            <WayNotApparentButton text="Sair" onClick={() => logOutofAccount()} />
           </View>
+          </View>
+         
         </View>
-        <View style={styles.buttonProfileEdit}>
-          <Button
-            text="Editar perfil"
-            onClick={() => router.replace("/perfil/editar")}
-          />
-          <Button text="Sair" onClick={() => logOutofAccount()} />
-        </View>
+
         <View style={{ flex: 5, padding: 20 }}>
           <Text style={styles.subtitle}>Interesses</Text>
           {interesses?.map((interesse) => (

@@ -10,7 +10,7 @@ export function Button(props: ButtonProp) {
   return (
     <View style={styles.button}>
       <Pressable style={styles.pressable} onPress={props.onClick}>
-        <Text style={styles.a}>{props.text}</Text>
+        <Text style={styles.buttonA}>{props.text}</Text>
       </Pressable>
     </View>
   );

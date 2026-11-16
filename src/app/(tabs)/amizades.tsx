@@ -14,6 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { checkIfLogged, getUserID } from "../auth/authContext";
 import { Amizade } from "../interfaces/amizade";
 import { Usuarios } from "../interfaces/usuarios";
+import { WayNotApparentButton } from "@/components/wayNotApparentButton";
 
 export default function Amizades() {
   const [amizades, setAmizades] = useState<Amizade[]>([]);
@@ -58,12 +59,12 @@ export default function Amizades() {
       <View style={styles.header}>
         <Text style={styles.title}>Amizades</Text>
         <View style={{ flexDirection: "row" }}>
-          <Button
+          <WayNotApparentButton
             text="Adicionar uma amizade"
             onClick={() => router.push("/amizade/addAmizade")}
           />
           <View style={{ flexDirection: "row-reverse" }}>
-            <Button text="Atualizar" onClick={() => location.reload()} />
+            <WayNotApparentButton text="Atualizar" onClick={() => location.reload()} />
           </View>
         </View>
       </View>
