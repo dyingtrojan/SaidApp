@@ -11,6 +11,8 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getUserID } from "../auth/authContext";
 import { Grupo } from "../interfaces/grupo";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
 
 export default function GrupoSimilares() {
   const [grupos, setGrupos] = useState<Grupo[]>([]);
@@ -37,8 +39,8 @@ export default function GrupoSimilares() {
     fetchData();
   }, []);
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView style={ContainerStyles.centerContainer}>
+      <View style={HeaderStyles.header}>
         <Link
           style={{ fontWeight: "500", fontSize: 20 }}
           href={"/(tabs)/grupos"}

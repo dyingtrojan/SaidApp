@@ -9,9 +9,10 @@ import {
 } from "@/lib/databaseHandler";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Button } from "./button";
 import { styles } from "./styles";
+import { Colors } from "./colors";
 
 type GrupoCardProps = {
   id: number;
@@ -79,7 +80,7 @@ export function GrupoCard(props: GrupoCardProps) {
     }
   });
   return (
-    <View style={styles.grupoCard}>
+    <View style={style.grupoCard}>
       <Text style={styles.subtitle}>{props.nome}</Text>
       <Text>{"\n"}</Text>
       <Text>{props.descricao}</Text>
@@ -123,3 +124,14 @@ async function entrarNoGrupo(groupId: number, userId: string) {
   const remUser = await addUserToGroup(groupId, userId);
   router.push("/(tabs)/grupos");
 }
+
+const style = StyleSheet.create({
+  grupoCard: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: Colors.cream,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 20,
+  },
+})

@@ -5,17 +5,19 @@ import { useState } from "react";
 import { ScrollView, Text, TextInput, View } from "react-native";
 import { signInWithEmail } from "./authContext";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.container}>
+    <SafeAreaView style={ContainerStyles.centerContainer}>
+      <ScrollView contentContainerStyle={ContainerStyles.centerContainer}>
       <View>
-        <View style={styles.login}>
-          <View style={styles.header}>
+        <View style={ContainerStyles.login}>
+          <View style={HeaderStyles.header}>
             <Link style={{ fontWeight: "500", fontSize: 20 }} href={"/"}>
               ← Voltar
             </Link>

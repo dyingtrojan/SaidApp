@@ -10,7 +10,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { checkIfLogged, logOut } from "../auth/authContext";
 import { Interesse } from "../interfaces/interesse";
 import { Usuarios } from "../interfaces/usuarios";
-import { WayNotApparentButton } from "@/components/wayNotApparentButton";
+import { HeaderButton } from "@/components/headerButton";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
+import { Colors } from "@/components/colors";
 
 export default function Perfil() {
   const defaultProfilePicture = require("@/assets/images/default_profile_picture.png");
@@ -58,22 +61,23 @@ export default function Perfil() {
   }, []);
   return (
     <ScrollView>
-      <SafeAreaView style={styles.genericContainer}>
-        <View style={styles.trueHeader}>
+      <SafeAreaView style={ContainerStyles.normalContainer}>
+        <View style={HeaderStyles.trueHeader}>
           <View>
             <Image
               source={image ? { uri: image } : defaultProfilePicture}
-              style={{ width: 100, height: 100, borderRadius: 50 }}
+              style={{ width: 100, height: 100, borderRadius: 50, borderColor: Colors.light, borderWidth: 2 }}
             />
             <Text style={styles.title}>{data?.nome}</Text>
             <Text style={styles.subtitle}>@{data?.username}</Text>
-             <View style={styles.buttonProfileEdit}>
-            <WayNotApparentButton
-              text="Editar perfil"
-              onClick={() => router.replace("/perfil/editar")}
-            />
-            <WayNotApparentButton text="Sair" onClick={() => logOutofAccount()} />
-          </View>
+            <Text>{"\n"}</Text>
+            <View style={styles.buttonProfileEdit}>
+              <HeaderButton
+                text="Editar perfil"
+                onClick={() => router.replace("/perfil/editar")}
+              />
+              <HeaderButton text="Sair" onClick={() => logOutofAccount()} />
+            </View>
           </View>
          
         </View>

@@ -13,6 +13,8 @@ import { Image, Text, TextInput, View } from "react-native";
 import { getUserID } from "../auth/authContext";
 import { Usuarios } from "../interfaces/usuarios";
 import { Platform } from "react-native";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
 
 export default function EditarPerfil() {
   const [open, setOpen] = useState(false);
@@ -64,9 +66,9 @@ export default function EditarPerfil() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={ContainerStyles.centerContainer}>
       <View style={styles.login}>
-        <View style={styles.header}>
+        <View style={HeaderStyles.header}>
           <Link
             style={{ fontWeight: "500", fontSize: 20 }}
             href={"/(tabs)/perfil"}

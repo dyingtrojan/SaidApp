@@ -7,6 +7,8 @@ import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Platform, ScrollView, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
 
 export default function CadastroPage() {
   const [open, setOpen] = useState(false);
@@ -20,11 +22,11 @@ export default function CadastroPage() {
   const [dataNasc, setDataNasc] = useState(new Date());
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.container}>
-        <View style={styles.login}>
-          <View style={styles.header}>
+    <SafeAreaView style={ContainerStyles.centerContainer}>
+      <ScrollView contentContainerStyle={ContainerStyles.centerContainer}>
+      <View style={ContainerStyles.centerContainer}>
+        <View style={ContainerStyles.login}>
+          <View style={HeaderStyles.header}>
             <Link style={{ fontWeight: "500", fontSize: 20 }} href={"/"}>
               ← Voltar
             </Link>
@@ -70,8 +72,10 @@ export default function CadastroPage() {
               type="datetime-local"
               onChange={(e) => setDataNasc(new Date(e.target.value))}
               style={{
-                height: 40,
-                width: 200,
+                height: 30,
+                width: "95%",
+                backgroundColor: "#ffffff00",
+                padding: 5,
                 borderRadius: 10,
                 border: "1px solid #000",
               }}

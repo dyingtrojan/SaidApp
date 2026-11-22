@@ -15,6 +15,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { checkIfLogged, getUserID } from "../auth/authContext";
 import { Evento } from "../interfaces/evento";
 import { Grupo } from "../interfaces/grupo";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { Colors } from "@/components/colors";
 
 export default function TelaInicial() {
   const router = useRouter();
@@ -76,13 +78,13 @@ export default function TelaInicial() {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: Colors.light}}>
       <SafeAreaView style={{ padding: 10 }}>
         <Text style={styles.subtitle}>
-          Eventos marcados em grupos que participa
+          Próximas saídas
         </Text>
         <Text>{"\n"}</Text>
-        <ScrollView horizontal style={styles.sidewaysContainer}>
+        <ScrollView horizontal style={ContainerStyles.sidewaysContainer}>
           {eventos.length === 0 ? (
             <Text>Nenhum evento marcado ainda.</Text>
           ) : (
@@ -102,21 +104,23 @@ export default function TelaInicial() {
           Recomendações de grupos para participar
         </Text>
         <Text>{"\n"}</Text>
-        {gruposRecomendados.length === 0 ? (
-          <Text>Nenhuma recomendação disponível ainda.</Text>
-        ) : (
-          gruposRecomendados.map((grupo) => (
-            <View key={grupo.id}>
-              <GrupoCard
-                nome={grupo.nome}
-                id={grupo.id}
-                descricao={grupo.descricao}
-                usuarioCriadorID={grupo.usuariocriadorid}
-              />
-              <Text>{"\n"}</Text>
-            </View>
-          ))
-        )}
+        <View style={ContainerStyles.groupIndexContainer}>
+          {gruposRecomendados.length === 0 ? (
+            <Text>Nenhuma recomendação disponível ainda.</Text>
+          ) : (
+            gruposRecomendados.map((grupo) => (
+              <View key={grupo.id}>
+                <GrupoCard
+                  nome={grupo.nome}
+                  id={grupo.id}
+                  descricao={grupo.descricao}
+                  usuarioCriadorID={grupo.usuariocriadorid}
+                />
+                <Text>{"\n"}</Text>
+              </View>
+            ))
+          )}
+        </View>
       </SafeAreaView>
     </ScrollView>
   );

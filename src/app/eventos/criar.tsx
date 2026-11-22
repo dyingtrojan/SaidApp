@@ -9,12 +9,15 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Link, router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Platform, Text, TextInput, View } from "react-native";
+import { Platform, ScrollView, Text, TextInput, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { getUserID } from "../auth/authContext";
 import { Evento } from "../interfaces/evento";
 import { Grupo } from "../interfaces/grupo";
 import { Local } from "../interfaces/local";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CriarEvento() {
   const [open, setOpen] = useState(false);
@@ -95,162 +98,164 @@ export default function CriarEvento() {
   }
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          borderColor: "#666565",
-          borderWidth: 1,
-          borderRadius: 10,
-          padding: 20,
-          width: "90%",
-        }}
-      >
-        <View style={styles.header}>
-          <Link
-            style={{ fontWeight: "500", fontSize: 20 }}
-            href={"/(tabs)/grupos"}
-          >
-            ← Voltar
-          </Link>
-          <Text>{"\n"}</Text>
-        </View>
-        <Text style={styles.title}>Criação de evento</Text>
-        <Text>{"\n"}</Text>
-        <Text>Descrição do evento</Text>
-        <TextInput
-          value={descricao}
-          onChangeText={setDescricao}
-          style={styles.multilineInput}
-          multiline
-          numberOfLines={4}
-          maxLength={200}
-        ></TextInput>
-        <Text>{"\n"}</Text>
-        <Text>Grupo do evento</Text>
-        <GroupDropDown
-          key="dropdown-grupo"
-          open={open as any}
-          value={value}
-          items={itemsGrupos as any}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setGruposItems as any}
-        />
-        <Text>{"\n"}</Text>
-        <Text>Local do evento</Text>
-        <DropDownPicker
-          key="dropdown-local"
-          open={openLocal}
-          value={localValue}
-          items={itemsLocais as any}
-          setOpen={setOpenLocal}
-          setValue={setLocalValue}
-          setItems={setLocaisItems as any}
-          zIndex={1000}
-          zIndexInverse={3000}
-        />
-        <Text>{"\n"}</Text>
-        <Button
-          text={
-            mostrarNovoLocal ? "Cancelar novo local" : "+ Cadastrar novo local"
-          }
-          onClick={() => setMostrarNovoLocal(!mostrarNovoLocal)}
-        />
-        {mostrarNovoLocal && (
-          <View style={{ width: "100%", marginTop: 10 }}>
-            <Text>Nome do novo local</Text>
-            <TextInput
-              value={novoLocalNome}
-              onChangeText={setNovoLocalNome}
-              style={styles.input}
-            />
+    <SafeAreaView>
+      <ScrollView contentContainerStyle={ContainerStyles.formContainer}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            borderColor: "#666565",
+            borderWidth: 1,
+            borderRadius: 10,
+            padding: 20,
+            width: "90%",
+          }}
+        >
+          <View style={HeaderStyles.header}>
+            <Link
+              style={{ fontWeight: "500", fontSize: 20 }}
+              href={"/(tabs)/grupos"}
+            >
+              ← Voltar
+            </Link>
             <Text>{"\n"}</Text>
-            <Text>Descrição</Text>
-            <TextInput
-              value={novoLocalDescricao}
-              onChangeText={setNovoLocalDescricao}
-              style={styles.multilineInput}
-              multiline
-              numberOfLines={3}
-              maxLength={200}
-            />
-            <Text>{"\n"}</Text>
-            <Button text="Salvar local" onClick={adicionarNovoLocal} />
           </View>
-        )}
-
-        <View>
+          <Text style={styles.title}>Criação de evento</Text>
           <Text>{"\n"}</Text>
-          <Text>Data e hora</Text>
-          {Platform.OS === "web" ? (
-            <input
-              type="datetime-local"
-              onChange={(e) => setDataHora(new Date(e.target.value))}
-              style={{
-                height: 40,
-                width: 200,
-                borderRadius: 10,
-                border: "1px solid #000",
-              }}
-            />
-          ) : (
-            <>
-              <Button
-                text={dataHora.toLocaleDateString()}
-                onClick={() => setShowPicker(true)}
+          <Text>Descrição do evento</Text>
+          <TextInput
+            value={descricao}
+            onChangeText={setDescricao}
+            style={styles.multilineInput}
+            multiline
+            numberOfLines={4}
+            maxLength={200}
+          ></TextInput>
+          <Text>{"\n"}</Text>
+          <Text>Grupo do evento</Text>
+          <GroupDropDown
+            key="dropdown-grupo"
+            open={open as any}
+            value={value}
+            items={itemsGrupos as any}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setGruposItems as any}
+          />
+          <Text>{"\n"}</Text>
+          <Text>Local do evento</Text>
+          <DropDownPicker
+            key="dropdown-local"
+            open={openLocal}
+            value={localValue}
+            items={itemsLocais as any}
+            setOpen={setOpenLocal}
+            setValue={setLocalValue}
+            setItems={setLocaisItems as any}
+            zIndex={1000}
+            zIndexInverse={3000}
+          />
+          <Text>{"\n"}</Text>
+          <Button
+            text={
+              mostrarNovoLocal ? "Cancelar novo local" : "+ Cadastrar novo local"
+            }
+            onClick={() => setMostrarNovoLocal(!mostrarNovoLocal)}
+          />
+          {mostrarNovoLocal && (
+            <View style={{ width: "100%", marginTop: 10 }}>
+              <Text>Nome do novo local</Text>
+              <TextInput
+                value={novoLocalNome}
+                onChangeText={setNovoLocalNome}
+                style={styles.input}
               />
-              {showPicker && (
-                <View>
+              <Text>{"\n"}</Text>
+              <Text>Descrição</Text>
+              <TextInput
+                value={novoLocalDescricao}
+                onChangeText={setNovoLocalDescricao}
+                style={styles.multilineInput}
+                multiline
+                numberOfLines={3}
+                maxLength={200}
+              />
+              <Text>{"\n"}</Text>
+              <Button text="Salvar local" onClick={adicionarNovoLocal} />
+            </View>
+          )}
+
+          <View>
+            <Text>{"\n"}</Text>
+            <Text>Data e hora</Text>
+            {Platform.OS === "web" ? (
+              <input
+                type="datetime-local"
+                onChange={(e) => setDataHora(new Date(e.target.value))}
+                style={{
+                  height: 40,
+                  width: 200,
+                  borderRadius: 10,
+                  border: "1px solid #000",
+                }}
+              />
+            ) : (
+              <>
+                <Button
+                  text={dataHora.toLocaleDateString()}
+                  onClick={() => setShowPicker(true)}
+                />
+                {showPicker && (
+                  <View>
+                    <DateTimePicker
+                      value={dataHora || new Date()}
+                      mode="date"
+                      display={Platform.OS === "ios" ? "spinner" : "default"}
+                      onValueChange={(event, selectedDate) => {
+                        setShowPicker(false);
+                        if (selectedDate) setDataHora(selectedDate);
+                        setShowPicker2(true);
+                      }}
+                      onDismiss={() => setOpen(false)}
+                    />
+                  </View>
+                )}
+                <Button
+                  text={dataHora.toLocaleTimeString()}
+                  onClick={() => setShowPicker2(true)}
+                />
+                {showPicker2 && (
                   <DateTimePicker
                     value={dataHora || new Date()}
-                    mode="date"
+                    mode="time"
                     display={Platform.OS === "ios" ? "spinner" : "default"}
                     onValueChange={(event, selectedDate) => {
                       setShowPicker(false);
                       if (selectedDate) setDataHora(selectedDate);
-                      setShowPicker2(true);
+                      setShowPicker2(false);
                     }}
                     onDismiss={() => setOpen(false)}
                   />
-                </View>
-              )}
-              <Button
-                text={dataHora.toLocaleTimeString()}
-                onClick={() => setShowPicker2(true)}
-              />
-              {showPicker2 && (
-                <DateTimePicker
-                  value={dataHora || new Date()}
-                  mode="time"
-                  display={Platform.OS === "ios" ? "spinner" : "default"}
-                  onValueChange={(event, selectedDate) => {
-                    setShowPicker(false);
-                    if (selectedDate) setDataHora(selectedDate);
-                    setShowPicker2(false);
-                  }}
-                  onDismiss={() => setOpen(false)}
-                />
-              )}
-            </>
-          )}
+                )}
+              </>
+            )}
+          </View>
+          <Text>{"\n"}</Text>
+          <Button
+            text="Criar evento"
+            onClick={() =>
+              CreateEvent(
+                descricao,
+                value,
+                userID,
+                dataHora.toISOString(),
+                localValue,
+              )
+            }
+          />
         </View>
-        <Text>{"\n"}</Text>
-        <Button
-          text="Criar evento"
-          onClick={() =>
-            CreateEvent(
-              descricao,
-              value,
-              userID,
-              dataHora.toISOString(),
-              localValue,
-            )
-          }
-        />
-      </View>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 export async function CreateEvent(

@@ -1,6 +1,7 @@
 import { getUserID } from "@/app/auth/authContext";
 import { Button } from "@/components/button";
 import { styles } from "@/components/styles";
+import { ContainerStyles } from "@/components/styles/containerStyles";
 import { banirUsuario, getAllUsers, podeModerar } from "@/lib/databaseHandler";
 import { Link, router, Stack } from "expo-router";
 import { useEffect, useState } from "react";
@@ -25,7 +26,7 @@ export default function ModeracaoUsuarios() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={ContainerStyles.centerContainer}>
       <Stack.Screen options={{ title: "Perfil", headerShown: true }} />
       <Link style={{ fontWeight: "500", fontSize: 20 }} href={"/(tabs)/perfil"}>
         ← Voltar
