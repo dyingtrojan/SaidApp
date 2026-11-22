@@ -1,12 +1,25 @@
 import { SelectItem } from "@/components/selectItem";
 import { styles } from "@/components/styles";
-import { getAllInterests } from "@/lib/databaseHandler";
+import { getAllInterests, getInterestsWithName } from "@/lib/databaseHandler";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import { Interesse } from "../interfaces/interesse";
+import { HeaderStyles } from "@/components/styles/headerStyles";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+
+
+async function getInterests(name: string){
+  if (name == "") return [];
+  const res = await getInterestsWithName(name);
+  const interSearch = res.data as Interesse[];
+  return interSearch
+}
 
 export default function InteressesPages() {
+  const [interestsSearched, setInteresseSearched] = useState("")
+  const [interestsFound, setInterestsFound] = useState<Interesse[]>([])
   const [interesses, setInteresses] = useState<Interesse[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,31 +34,32 @@ export default function InteressesPages() {
     fetchData();
   }, []);
   return (
-    <ScrollView style={{ flex: 1, padding: 20 }}>
-      <View style={styles.header}>
-        <Link
-          style={{ fontWeight: "500", fontSize: 20 }}
-          href={"/(tabs)/perfil"}
-        >
+    <SafeAreaView style={ContainerStyles.normalContainer}>
+      <View style={HeaderStyles.header}>
+        <Link style={{ fontWeight: "500", fontSize: 20 }} href={"/(tabs)/perfil"}>
           ← Voltar
         </Link>
-        <Text>{"\n"}</Text>
-        <Text style={styles.subtitle}>Selecione seus interesses</Text>
+        <Text style={styles.title}>Interesses</Text>
+      </View>
+      <View style={{ flexDirection: "row"}}>
+        <TextInput style={styles.input}
+        placeholder="Digite o nome do seu interesse (Música)"
+        defaultValue={interestsSearched}
+        onChangeText={async (interesse) => 
+          setInterestsFound(await getInterests(interesse))
+        }
+        ></TextInput>
         <Text>{"\n"}</Text>
       </View>
       <ScrollView>
-        {interesses.map((interesse) => (
-          <View key={interesse.id}>
-            <SelectItem
+          {interestsFound.map((interesse) => (
+            <View key={interesse.id} style={{flexDirection: "row", width: "100%"}}>
+              <SelectItem key={interesse.id}
               id={interesse.id}
-              text={interesse.nome}
-              key={interesse.id}
-              onClick={() => alert(`${interesse.id}`)}
-            />
-            <Text>{"\n"}</Text>
-          </View>
-        ))}
-      </ScrollView>
-    </ScrollView>
+              text={interesse.nome}/>
+            </View>
+          ))}
+        </ScrollView>
+    </SafeAreaView>
   );
 }

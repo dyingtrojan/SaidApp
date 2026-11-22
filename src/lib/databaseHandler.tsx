@@ -435,6 +435,15 @@ export async function getAllInterests() {
   return { data };
 }
 
+export async function getInterestsWithName(name: string){
+  const {data, error} = await supabase.from("interesses").select("*").ilike("nome", `%${name}%`)
+  .limit(20);
+  if (error){
+    return { success: false, error }
+  }
+  return {data}
+}
+
 export async function getGroupInterests(groupId: number) {
   const { data, error } = await supabase
     .from("fkgrupointeresses")

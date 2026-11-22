@@ -8,7 +8,9 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Grupo } from "../interfaces/grupo";
 import { checkIfLogged } from "../auth/authContext";
-import { WayNotApparentButton } from "@/components/wayNotApparentButton";
+import { HeaderButton } from "@/components/headerButton";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
 
 export default function Grupos() {
   const [data, setData] = useState<Grupo[] | null>(null);
@@ -37,43 +39,41 @@ export default function Grupos() {
     fetchData();
   }, []);
   return (
-    <ScrollView>
-      <SafeAreaView>
-        <ScrollView>
-          <View style={styles.container}>
-            <Text style={styles.title}>Grupos</Text>
-            <View>
-              <View style={styles.fixedHeader}>
-                <WayNotApparentButton
-                  text="Criar grupo"
-                  onClick={() => router.replace("/grupo/criar")}
-                />
-                <WayNotApparentButton
-                  text="Ver grupos que pode participar"
-                  onClick={() => router.replace("/grupo/gruposSimilares")}
-                />
-              </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={ContainerStyles.centerContainer}>
+          <Text style={styles.title}>Grupos</Text>
+          <View>
+            <View style={HeaderStyles.fixedHeader}>
+              <HeaderButton
+                text="Criar grupo"
+                onClick={() => router.replace("/grupo/criar")}
+              />
+              <HeaderButton
+                text="Recomendações de grupos"
+                onClick={() => router.replace("/grupo/gruposSimilares")}
+              />
             </View>
-            <Text>{"\n"}</Text>
-            <Text style={styles.subtitle}>Grupos você que participa</Text>
-            <Text>{"\n"}</Text>
-            <ScrollView>
-              {data?.map((grupo) => (
-                <View key={grupo.id}>
-                  <GrupoCard
-                    key={grupo.id}
-                    id={grupo.id}
-                    nome={grupo.nome}
-                    descricao={grupo.descricao}
-                    usuarioCriadorID={grupo.usuariocriadorid}
-                  />
-                  <Text>{"\n"}</Text>
-                </View>
-              ))}
-            </ScrollView>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </ScrollView>
+          <Text>{"\n"}</Text>
+          <Text style={styles.subtitle}>Grupos você que participa</Text>
+          <Text>{"\n"}</Text>
+          <ScrollView>
+            {data?.map((grupo) => (
+              <View key={grupo.id}>
+                <GrupoCard
+                  key={grupo.id}
+                  id={grupo.id}
+                  nome={grupo.nome}
+                  descricao={grupo.descricao}
+                  usuarioCriadorID={grupo.usuariocriadorid}
+                />
+                <Text>{"\n"}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

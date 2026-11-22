@@ -1,24 +1,7 @@
 import { StyleSheet } from "react-native";
+import { useFonts } from 'expo-font';
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-  },
-  form: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "#666565",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 20,
-  },
-  genericContainer: {
-    flex: 1,
-    padding: 10,
-  },
   multilineInput: {
     borderColor: "#000000",
     borderWidth: 1,
@@ -32,39 +15,8 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     flex: 1,
   },
-  sidewaysContainer: {
-    flex: 1,
-    padding: 10,
-    overflow: "scroll",
-    flexDirection: "row",
-    rowGap: 20
-  },
-  fixedHeader: {
-    marginTop: 20,
-    flexDirection: "row",
-    position: "sticky",
-    top: 0,
-  },
-  trueHeader: {
-    padding: 20,
-    alignSelf: "flex-start",
-    flexDirection: "row",
-    backgroundColor: "#dbd9d9",
-    width: "100%",
-  },
-  login: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "#666565",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 20,
-  },
   right: {
     alignContent: "flex-start",
-  },
-  header: {
-    alignSelf: "flex-start",
   },
   buttonProfileEdit: {
     alignSelf: "flex-end",
@@ -91,72 +43,27 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 45,
+    fontFamily: "Quicksand_400Regular",
     fontWeight: "bold",
   },
   subtitle: {
     fontSize: 32,
+    fontFamily: "Quicksand_700Bold",
     fontWeight: "semibold",
   },
   subtitle2: {
     fontSize: 16,
+    fontFamily: "Quicksand_400Regular",
     fontWeight: "condensed",
     color: "#303030",
-  },
-  grupoCard: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "#666565",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 20,
   },
   buttons: {
     marginTop: 40,
   },
-  button: {
-    backgroundColor: "#000000",
-    color: "#ffffff",
-    borderColor: "#ffffff00",
-    textDecorationLine: "none",
-    textDecorationColor: "#ffffff",
-    borderRadius: 15,
-    width: 200,
-    height: 60,
-    marginBottom: 20,
-  },
-  wnabutton: {
-    backgroundColor: "#00000000",
-    borderBottomColor: "#000000",
-    borderWidth: 1,
-    color: "#000000",
-    borderColor: "#ffffff00",
-    textDecorationLine: "none",
-    textDecorationColor: "#ffffff",
-    borderRadius: 15,
-    width: 150,
-    height: 45,
-    marginBottom: 20,
-  },
   a: {
     textDecorationLine: "none",
+    fontFamily: "Quicksand_400Regular",
     textDecorationColor: "white",
     color: "white",
   },
-  wnaA: {
-    flex: 1,
-    color: "black",
-  },
-  buttonA: {
-    flex: 1,
-    color: "white",
-  },
-  pressable: {
-    width: "100%",
-    height: "100%",
-    alignContent: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    alignItems: "center",
-    alignSelf: "center", 
-  }
 });

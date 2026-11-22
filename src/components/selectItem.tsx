@@ -11,7 +11,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 type SelectItemProp = {
   text: string;
   id: number;
-  onClick: any;
+  onClick?: any;
 };
 
 export function SelectItem(props: SelectItemProp) {

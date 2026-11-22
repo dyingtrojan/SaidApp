@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { Platform, Text, TextInput, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Grupo } from "../../interfaces/grupo";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
 
 export default function EditarEvento() {
   const [open, setOpen] = useState(false);
@@ -107,9 +109,9 @@ export default function EditarEvento() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={ContainerStyles.centerContainer}>
       <View style={styles.login}>
-        <View style={styles.header}>
+        <View style={HeaderStyles.header}>
           <Link
             style={{ fontWeight: "500", fontSize: 20 }}
             href={"/(tabs)/eventos"}

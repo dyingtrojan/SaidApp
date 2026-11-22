@@ -1,5 +1,7 @@
 import { Button } from "@/components/button";
 import { styles } from "@/components/styles";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
 import { criarLocal } from "@/lib/databaseHandler";
 import { Link, router } from "expo-router";
 import { useState } from "react";
@@ -10,10 +12,10 @@ export default function CriarLocal() {
   const [descricao, setDescricao] = useState("");
 
   return (
-    <View style={styles.container}>
-      <View style={styles.form}>
-        <View style={styles.header}>
-          <Link style={{ fontWeight: "500", fontSize: 20 }} href={"/local"}>
+    <View style={ContainerStyles.centerContainer}>
+      <View style={ContainerStyles.formContainer}>
+        <View style={HeaderStyles.header}>
+          <Link style={{ fontWeight: "500", fontSize: 20 }} href={"/(tabs)"}>
             ← Voltar
           </Link>
           <Text>{"\n"}</Text>
@@ -37,7 +39,7 @@ export default function CriarLocal() {
           text="Salvar local"
           onClick={async () => {
             await criarLocal(nome, descricao);
-            router.replace("/local");
+            router.replace("/(tabs)");
           }}
         />
       </View>

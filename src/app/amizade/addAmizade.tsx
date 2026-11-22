@@ -13,6 +13,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getUserID } from "../auth/authContext";
 import { Amizade } from "../interfaces/amizade";
 import { Usuarios } from "../interfaces/usuarios";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderStyles } from "@/components/styles/headerStyles";
 
 async function getUsers(handle: string) {
   if (handle == "") {
@@ -39,8 +41,8 @@ export default function AddAmizade() {
   const [anotherUser, setAnotherUser] = useState("");
   const [usuarios, setUsuarios] = useState<Usuarios[] | []>([]);
   return (
-    <SafeAreaView style={styles.genericContainer}>
-      <View style={styles.header}>
+    <SafeAreaView style={ContainerStyles.normalContainer}>
+      <View style={HeaderStyles.header}>
         <Link
           style={{ fontWeight: "500", fontSize: 20 }}
           href={"/(tabs)/amizades"}
@@ -54,6 +56,7 @@ export default function AddAmizade() {
           style={styles.input}
           placeholder="Digite o nome de usuario (@nome_de_usuario)"
           defaultValue={anotherUser}
+          placeholderTextColor={"#b4b0b0"}
           onChangeText={async (userhandle) =>
             setUsuarios(await getUsers(userhandle))
           }

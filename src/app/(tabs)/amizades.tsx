@@ -14,7 +14,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { checkIfLogged, getUserID } from "../auth/authContext";
 import { Amizade } from "../interfaces/amizade";
 import { Usuarios } from "../interfaces/usuarios";
-import { WayNotApparentButton } from "@/components/wayNotApparentButton";
+import { HeaderButton } from "@/components/headerButton";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { Divider } from "@rneui/base";
+import { HeaderStyles } from "@/components/styles/headerStyles";
 
 export default function Amizades() {
   const [amizades, setAmizades] = useState<Amizade[]>([]);
@@ -55,29 +58,31 @@ export default function Amizades() {
     fetchData();
   }, []);
   return (
-    <SafeAreaView style={styles.genericContainer}>
-      <View style={styles.header}>
+    <SafeAreaView style={ContainerStyles.normalContainer}>
+      <View style={HeaderStyles.header}>
         <Text style={styles.title}>Amizades</Text>
         <View style={{ flexDirection: "row" }}>
-          <WayNotApparentButton
+          <HeaderButton
             text="Adicionar uma amizade"
             onClick={() => router.push("/amizade/addAmizade")}
           />
           <View style={{ flexDirection: "row-reverse" }}>
-            <WayNotApparentButton text="Atualizar" onClick={() => location.reload()} />
+            <HeaderButton text="Atualizar" onClick={() => location.reload()} />
           </View>
         </View>
       </View>
       <ScrollView>
+        <Text>{"\n"}</Text>
+        <Divider />
+        <Text>{"\n"}</Text>
         {amigos.map((usuario) => (
-          <View key={usuario.id} style={{ flexDirection: "column" }}>
+          <View key={usuario.id} style={{ flexDirection: "column", gap: 15}}>
             <UserCard
               username={usuario.username}
               nome={usuario.nome}
               id={usuario.id}
               fotoperfil={usuario.fotoperfil}
             />
-            <Text>{"\n"}</Text>
             <Button
               text={
                 amizades[amigos.indexOf(usuario)].acceptance_level == 1
@@ -94,6 +99,8 @@ export default function Amizades() {
                 )
               }
             />
+            <Divider />
+            <Text>{"\n"}</Text>
           </View>
         ))}
       </ScrollView>

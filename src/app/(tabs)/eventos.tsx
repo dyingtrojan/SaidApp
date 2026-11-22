@@ -8,11 +8,13 @@ import {
 } from "@/lib/databaseHandler";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Evento } from "../interfaces/evento";
 import { Grupo } from "../interfaces/grupo";
 import { checkIfLogged } from "../auth/authContext";
+import { ContainerStyles } from "@/components/styles/containerStyles";
+import { HeaderButton } from "@/components/headerButton";
 
 export default function Eventos() {
   const [eventos, setEventos] = useState<Evento[] | []>([]);
@@ -54,27 +56,37 @@ export default function Eventos() {
   }, [setEventos]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Button
-        text="Criar evento"
-        onClick={() => router.push("/eventos/criar")}
-      />
-      <ScrollView>
-        {eventos?.map((evento: any) => (
-          <View key={evento.id}>
-            <SaidaCard
-              titulo={evento.descricao}
-              local={evento.local?.nome || "Local não definido"}
-              data={evento.datahora || ""}
-              grupo={evento.grupo.nome}
-              usuarioCriadorID={evento.usuariocriadorid}
-              key={evento.id}
-              id={evento.id}
-            />
-            <Text>{"\n"}</Text>
-          </View>
-        ))}
-      </ScrollView>
+    <SafeAreaView style={ContainerStyles.normalContainer}>
+      <View style={ContainerStyles.centerContainer}> 
+        <HeaderButton
+          text="Criar evento"
+          onClick={() => router.push("/eventos/criar")}
+        />
+        <ScrollView style={style.gap} contentContainerStyle={{alignItems: "center", gap: 10}}>
+          {eventos?.map((evento: any) => (
+            <View key={evento.id}>
+              <SaidaCard
+                titulo={evento.descricao}
+                local={evento.local?.nome || "Local não definido"}
+                data={evento.datahora || ""}
+                grupo={evento.grupo.nome}
+                usuarioCriadorID={evento.usuariocriadorid}
+                key={evento.id}
+                id={evento.id}
+              />
+            </View>
+          ))}
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
+
+const style = StyleSheet.create({
+  gap: {
+    flex: 1,
+    flexDirection: "column",
+    width: "100%",
+    overflow: "scroll",
+  }
+})
