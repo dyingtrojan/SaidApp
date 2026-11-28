@@ -32,11 +32,10 @@ export default function CadastroPage() {
             </Link>
             <Text>{"\n"}</Text>
           </View>
-          <Text style={styles.title}>SaidApp</Text>
-          <Text>
-            Marque saidas com seus amigos,{"\n"}crie novas amizades{"\n"}e crie
-            memorias que ficarão marcadas.{"\n"}
-          </Text>
+                <View style={{flexDirection: "row", rowGap: 0}}>
+        <Text style={styles.titleScreenText_part1}>Said</Text>
+        <Text style={styles.titleScreenText_part2}>App</Text>
+      </View>
           <Text>{"\n"}</Text>
           <Text>Nome</Text>
           <TextInput

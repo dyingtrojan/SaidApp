@@ -9,6 +9,7 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+eas.json
 
 # Native
 .kotlin/
@@ -45,3 +46,4 @@ example
 .vercel
 .env*
 /.idea
+eas.json
