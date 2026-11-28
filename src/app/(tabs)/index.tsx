@@ -17,6 +17,7 @@ import { Evento } from "../interfaces/evento";
 import { Grupo } from "../interfaces/grupo";
 import { ContainerStyles } from "@/components/styles/containerStyles";
 import { Colors } from "@/components/colors";
+import { Button } from "@/components/button";
 
 export default function TelaInicial() {
   const router = useRouter();
@@ -84,6 +85,7 @@ export default function TelaInicial() {
           Próximas saídas
         </Text>
         <Text>{"\n"}</Text>
+        <Button text="MAPA" onClick={() => router.navigate("/locais")} />
         <ScrollView horizontal style={ContainerStyles.sidewaysContainer}>
           {eventos.length === 0 ? (
             <Text>Nenhum evento marcado ainda.</Text>

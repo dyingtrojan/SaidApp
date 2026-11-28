@@ -1,4 +1,5 @@
 import { Button } from "@/components/button";
+import MapView from 'react-native-maps';
 import { styles } from "@/components/styles";
 import {
   createEvent,
@@ -18,6 +19,7 @@ import { Local } from "../interfaces/local";
 import { ContainerStyles } from "@/components/styles/containerStyles";
 import { HeaderStyles } from "@/components/styles/headerStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 
 export default function CriarEvento() {
   const [open, setOpen] = useState(false);
@@ -156,12 +158,14 @@ export default function CriarEvento() {
             zIndexInverse={3000}
           />
           <Text>{"\n"}</Text>
+          
           <Button
             text={
               mostrarNovoLocal ? "Cancelar novo local" : "+ Cadastrar novo local"
             }
             onClick={() => setMostrarNovoLocal(!mostrarNovoLocal)}
           />
+          
           {mostrarNovoLocal && (
             <View style={{ width: "100%", marginTop: 10 }}>
               <Text>Nome do novo local</Text>

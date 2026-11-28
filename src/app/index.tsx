@@ -1,7 +1,7 @@
 import { styles } from "@/components/styles";
 import { Link, router } from "expo-router";
 import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { checkIfLogged } from "./auth/authContext";
 import { Button } from "@/components/button";
 import { ContainerStyles } from "@/components/styles/containerStyles";
@@ -18,7 +18,12 @@ export default function Index() {
   });
   return (
     <View style={ContainerStyles.centerContainer}>
-      <Text style={styles.title}>SaidApp</Text>
+      <Image style={{width: "10%", height: "10%"}} source={require("@/assets/images/saidapp_nobackground.png")}></Image>
+      <View style={{flexDirection: "row", rowGap: 0}}>
+        <Text style={styles.titleScreenText_part1}>Said</Text>
+        <Text style={styles.titleScreenText_part2}>App</Text>
+      </View>
+      <Text>{"\n"}</Text>
       <Text>
         Marque saidas com seus amigos,{"\n"}crie novas amizades{"\n"}e crie
         memorias que ficarão marcadas.

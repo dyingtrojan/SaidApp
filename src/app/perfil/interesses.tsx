@@ -48,6 +48,7 @@ export default function InteressesPages() {
         onChangeText={async (interesse) => 
           setInterestsFound(await getInterests(interesse))
         }
+        placeholderTextColor={"#9d9d9d"}
         ></TextInput>
         <Text>{"\n"}</Text>
       </View>

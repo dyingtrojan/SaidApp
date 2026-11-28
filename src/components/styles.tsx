@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 import { useFonts } from 'expo-font';
+import { Color } from "expo-router";
+import { Colors } from "./colors";
 
 export const styles = StyleSheet.create({
   multilineInput: {
@@ -66,4 +68,16 @@ export const styles = StyleSheet.create({
     textDecorationColor: "white",
     color: "white",
   },
+  titleScreenText_part1: {
+    fontSize: 45,
+    fontFamily: "Quicksand_400Regular",
+    fontWeight: "bold",
+    color: Colors.darkTeal
+  },
+  titleScreenText_part2: {
+    fontSize: 45,
+    fontFamily: "Quicksand_400Regular",
+    fontWeight: "bold",
+    color: Colors.carrotOrange
+  }
 });
